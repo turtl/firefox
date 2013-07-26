@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="app/css/reset.css">
     <link rel="stylesheet" href="app/css/template.css">
     <link rel="stylesheet" href="app/css/general.css">
+
 <link rel="stylesheet" href="app/css/ie.css">
 <link rel="stylesheet" href="app/css/messages.css">
 <link rel="stylesheet" href="app/css/modules/barfr.css">
@@ -22,7 +23,6 @@
 <link rel="stylesheet" href="app/css/site/personas.css">
 <link rel="stylesheet" href="app/css/site/tags.css">
 <link rel="stylesheet" href="app/css/site/users.css">
-
     <link rel="shortcut icon" href="app/favicon.png" type="image/png">
     <script src="app/library/mootools-core-1.4.5.js"></script>
     <script src="app/library/mootools-more-1.4.0.1.js"></script>
@@ -31,30 +31,31 @@
     <script src="app/library/composer/composer.filtercollection.js"></script>
     <script src="app/library/composer/composer.keyboard.js"></script>
     <script>Composer.suppress_warnings = true;</script>
-<script src="app/config/config.js"></script>
-<script src="app/config/auth.js"></script>
-<script src="app/config/routes.js"></script>
+	<script src="app/config/config.js"></script>
+	<script src="app/config/auth.js"></script>
+	<script src="app/config/routes.js"></script>
 
+<script src="app/library/autocomplete.js"></script>
+<script src="app/library/barfr.js"></script>
+<script src="app/library/base64.js"></script>
 <script src="app/library/CryptoJS v3.1.2/aes.js"></script>
 <script src="app/library/CryptoJS v3.1.2/pad-ansix923-min.js"></script>
 <script src="app/library/CryptoJS v3.1.2/pad-iso97971-min.js"></script>
 <script src="app/library/CryptoJS v3.1.2/pbkdf2.js"></script>
 <script src="app/library/CryptoJS v3.1.2/sha256.js"></script>
-<script src="app/library/Markdown.Converter.js"></script>
-<script src="app/library/autocomplete.js"></script>
-<script src="app/library/barfr.js"></script>
-<script src="app/library/base64.js"></script>
 <script src="app/library/functions.js"></script>
 <script src="app/library/history/History.js"></script>
 <script src="app/library/history/History.mootools.js"></script>
+<script src="app/library/lunr.js"></script>
+<script src="app/library/Markdown.Converter.js"></script>
 <script src="app/library/modal.js"></script>
 <script src="app/library/mooMasonry.js"></script>
 <script src="app/library/tcrypt.js"></script>
 <script src="app/library/template.js"></script>
 <script src="app/library/timer.js"></script>
 <script src="app/library/tips.js"></script>
+<script src="app/tagit.js"></script>
 
-    <script src="app/tagit.js"></script>
 <script src="app/tagit/api.js"></script>
 <script src="app/tagit/landing.js"></script>
 <script src="app/tagit/view-helper.js"></script>
@@ -101,12 +102,11 @@
 <script src="app/models/setting.js"></script>
 <script src="app/models/tag.js"></script>
 <script src="app/models/user.js"></script>
-
   </head>
   <body class="initial">
     <div id="loading-overlay">
       <div>
-        <span>Downloading your data...
+        <span>Initializing
         </span>
         <span class="spin">/
         </span>
@@ -134,6 +134,7 @@
         </div>
       </footer>
     </div>
+
 <script type="text/x-lb-tpl" name="boards/edit">
 <?
 var action	=	(board.id ? 'Edit' : 'Add');
@@ -163,16 +164,15 @@ var action	=	(board.id ? 'Edit' : 'Add');
 				</option>
 			<? }); ?>
 		</select>
-		<img class="loading" src="images/site/icons/load_42x11.gif" width="42" height="11" alt="loading">
 		<ul class="actions">
 			<li>
 				<a href="#" class="add" title="Add a new board (shortcut `b`)">
-					<img src="images/site/icons/add_16x16_black.png" alt="add" width="16" height="16">
+					<img src="<?=img('/images/site/icons/add_16x16_black.png')?>" alt="add" width="16" height="16">
 				</a>
 			</li>
 			<li>
 				<a href="#" class="manage" title="Manage your boards">
-					<img src="images/site/icons/manage_16x16_black.png" alt="manage" width="16" height="16">
+					<img src="<?=img('/images/site/icons/manage_16x16_black.png')?>" alt="manage" width="16" height="16">
 				</a>
 			</li>
 		</ul>
@@ -180,7 +180,7 @@ var action	=	(board.id ? 'Edit' : 'Add');
 		<ul class="actions">
 			<li>
 				<a href="#" class="add first" title="Add a new board (shortcut `b`)">
-					<img src="images/site/icons/add_16x16_black.png" alt="add" width="16" height="16">
+					<img src="<?=img('/images/site/icons/add_16x16_black.png')?>" alt="add" width="16" height="16">
 					Add your first board
 				</a>
 			</li>
@@ -209,23 +209,23 @@ var action	=	(board.id ? 'Edit' : 'Add');
 					<? if(b.shared) { ?>
 						<li>
 							<a href="#leave" class="<?=b.id?>" title="Leave board">
-								<img src="images/site/icons/remove_16x16_black.png" alt="share" width="16" height="16">
+								<img src="<?=img('/images/site/icons/remove_16x16_black.png')?>" alt="share" width="16" height="16">
 							</a>
 						</li>
 					<? } else { ?>
 						<li class="<? if(b.share_enabled) { ?>highlight<? } ?>">
 							<a href="#share" class="<?=b.id?>" title="Share board">
-								<img src="images/site/icons/share_16x16_black.png" alt="share" width="16" height="16">
+								<img src="<?=img('/images/site/icons/share_16x16_black.png')?>" alt="share" width="16" height="16">
 							</a>
 						</li>
 						<li>
 							<a href="#edit" class="<?=b.id?>" title="Edit board">
-								<img src="images/site/icons/edit_16x16_black.png" alt="Edit" width="16" height="16">
+								<img src="<?=img('/images/site/icons/edit_16x16_black.png')?>" alt="Edit" width="16" height="16">
 							</a>
 						</li>
 						<li>
 							<a href="#delete" class="<?=b.id?>" title="Delete board (and all contained data)">
-								<img src="images/site/icons/delete_16x16_black.png" alt="Delete" width="16" height="16">
+								<img src="<?=img('/images/site/icons/delete_16x16_black.png')?>" alt="Delete" width="16" height="16">
 							</a>
 						</li>
 					<? } ?>
@@ -272,7 +272,7 @@ var action	=	(board.id ? 'Edit' : 'Add');
 						<ul>
 							<li>
 								<a href="#remove" title="Remove this user from sharing">
-									<img src="images/site/icons/remove_16x16_black.png" width="16" height="16" alt="remove">
+									<img src="<?=img('/images/site/icons/remove_16x16_black.png')?>" width="16" height="16" alt="remove">
 								</a>
 							</li>
 						</ul>
@@ -320,7 +320,6 @@ var action	=	(board.id ? 'Edit' : 'Add');
 		</div>
 	</div>
 </div>
-
 </script>
 <script type="text/x-lb-tpl" name="modules/header_bar">
 <? if(user.id) { ?>
@@ -329,25 +328,33 @@ var action	=	(board.id ? 'Edit' : 'Add');
 
 <div class="actions">
 	<? if(user.id) { ?>
-		<a class="menu" href="#menu"><img src="images/site/icons/menu_37x29.png" width="37" height="29" alt="Menu"></a>
+		<a class="menu" href="#menu"><img src="<?=img('/images/site/icons/menu_37x29.png')?>" width="37" height="29" alt="Menu"></a>
 		<ul class="menu">
 			<li class="persona">
 				<a href="#personas" title="Manage your identity">
-					<img src="images/site/icons/person_16x16.png" width="16" height="16" alt="Persona">
+					<img src="<?=img('/images/site/icons/person_16x16.png')?>" width="16" height="16" alt="Persona">
 					<span>Personas</span>
 				</a>
 			</li>
+			<?/*
+			<li class="sync">
+				<a href="#sync" title="Sync your profile with the server">
+					<img src="<?=img('/images/site/icons/sync_16x16.png')?>" width="16" height="16" alt="Sync">
+					<span>Sync profile</span>
+				</a>
+			</li>
+			*/?>
 			<li class="bookmarklet">
 				<? var site_url = __site_url; ?>
 				<? var site_url = 'http://dev.musio.com:9060'; ?>
-				<a href="javascript:(function() { var u = encodeURIComponent(window.location.href); var t = encodeURIComponent(document.title); var m = document.getElementsByTagName('meta'); var y = 'link'; var d = ''; var i = false; for(var x in m) {if(m[x].name == 'description') {d = m[x].content; break;}} for(var x in m) { if(m[x].getAttribute && m[x].getAttribute('property') == 'og:image') { i = m[x].content; break; } } if(i) d = '![image]('+i+')  \\n'+d; d = encodeURIComponent(d); var req = new XMLHttpRequest(); req.open('GET', document.location, false); req.send(null); var headers = req.getAllResponseHeaders().toLowerCase(); var content = headers.match(new RegExp('content-type: image/([\\\\w]+)')); if(content && content[1]) { y = 'image'; t = ''; } f = '<?=window.location.protocol?>//<?=window.location.host?>/bookmark?url='+ u +'&title='+ t +'&text='+ d +'&type='+ y; t = function() { if(!window.open(f, 'tagit', 'location=yes,links=no,scrollbars=no,toolbar=no,width=740,height=525')) { location.href = f; } }; if(/Firefox/.test(navigator.userAgent)) setTimeout(t, 0); else t(); })()" title="Drag me to your bookmarks!">
-					<img src="images/site/icons/link_16x16.png" width="16" height="16" alt="Bookmarklet">
+				<a href="javascript:(function() { var u = encodeURIComponent(window.location.href); var t = encodeURIComponent(document.title); var m = document.getElementsByTagName('meta'); var y = 'link'; var d = ''; var i = false; for(var x in m) {if(m[x].name == 'description') {d = m[x].content; break;}} for(var x in m) { if(m[x].getAttribute && m[x].getAttribute('property') == 'og:image') { i = m[x].content; break; } } if(i) d = '![image]('+i+')  \n'+d; d = encodeURIComponent(d); var req = new XMLHttpRequest(); req.open('GET', document.location, false); req.send(null); var headers = req.getAllResponseHeaders().toLowerCase(); var content = headers.match(new RegExp('content-type: image/([\\w]+)')); if(content && content[1]) { y = 'image'; t = ''; } f = '<?=window.location.protocol?>//<?=window.location.host?>/bookmark?url='+ u +'&title='+ t +'&text='+ d +'&type='+ y; t = function() { if(!window.open(f, 'tagit', 'location=yes,links=no,scrollbars=no,toolbar=no,width=740,height=525')) { location.href = f; } }; if(/Firefox/.test(navigator.userAgent)) setTimeout(t, 0); else t(); })()" title="Drag me to your bookmarks!">
+					<img src="<?=img('/images/site/icons/link_16x16.png')?>" width="16" height="16" alt="Bookmarklet">
 					<span>Bookmarklet</span>
 				</a>
 			</li>
 			<li class="logout">
 				<a href="/users/logout" title="Sign out (shortcut `shift+L`)">
-					<img src="images/site/icons/logout_16x16.png" width="16" height="16" alt="Logout">
+					<img src="<?=img('/images/site/icons/logout_16x16.png')?>" width="16" height="16" alt="Logout">
 					<span>Logout</span>
 				</a>
 			</li>
@@ -471,7 +478,6 @@ var format_tag = function(tagname, selected)
 		<? } ?>
 	</ul>
 <? } ?>
-
 </script>
 <script type="text/x-lb-tpl" name="notes/index">
 <div class="note-actions">
@@ -497,9 +503,9 @@ var format_tag = function(tagname, selected)
 		</li>
 		-->
 	</ul>
+	<input type="text" name="search" placeholder="Search board notes">
 </div>
 <ul class="clear note_list list_<?=display_type?>"></ul>
-
 </script>
 <script type="text/x-lb-tpl" name="notes/list/image">
 <a class="img" href="<?=note.url?>" target="_blank">
@@ -565,7 +571,6 @@ if(!title) title = note.url.replace(/^[\w]+:\/\/(www\.)?/i, '').replace(/([?&#])
 		</option>
 	<? }); ?>
 </select>
-
 </script>
 <script type="text/x-lb-tpl" name="notes/view/image">
 <a class="img clear" href="<?=note.url?>" target="_blank">
@@ -604,7 +609,6 @@ if(color) color = ['none','blue','red','green','purple','pink','brown','black'][
 	note: note,
 	tags: tags.clean()
 })?>
-
 </script>
 <script type="text/x-lb-tpl" name="notes/view/link">
 <?
@@ -623,7 +627,7 @@ if(!title) title = note.url.replace(/^[\w]+:\/\/(www\.)?/i, '');
 <script type="text/x-lb-tpl" name="notes/view/tags">
 <? if(tags.length > 0) { ?>
 	<div class="note-tags clear">
-		<!--<img src="images/site/icons/tag_16x16_black.png" class="icon" title="tags" width="16" height="16" alt="tags" />-->
+		<!--<img src="<?=img('/images/site/icons/tag_16x16_black.png')?>" class="icon" title="tags" width="16" height="16" alt="tags" />-->
 		<ul class="tags clear">
 			<? tags.each(function(t) { ?>
 				<li><span><?=t.name?></span></li>
@@ -661,7 +665,6 @@ if(!title) title = note.url.replace(/^[\w]+:\/\/(www\.)?/i, '');
 		<? } ?>
 	</div>
 </div>
-
 </script>
 <script type="text/x-lb-tpl" name="personas/edit">
 <?
@@ -671,7 +674,7 @@ var action = persona.id ? 'Edit' : 'Add';
 <div class="persona-edit">
 	<form class="standard-form">
 		<input tabindex="1" type="text" name="screenname" value="<?=persona.screenname?>" placeholder="Screen name (valid characters: &quot;A-Z0-9.&quot;)">
-		<img class="load" src="images/site/icons/load_16x16.gif" width="16" height="16" alt="WORKING!!!1">
+		<img class="load" src="<?=img('/images/site/icons/load_16x16.gif')?>" width="16" height="16" alt="WORKING!!!1">
 		<p class="taken">(type your screenname above to see if it's available)</p>
 
 		<input tabindex="2" type="text" name="name" value="<?=persona.name?>" placeholder="Full name (optional)">
@@ -738,19 +741,18 @@ var action = persona.id ? 'Edit' : 'Add';
 			<ul>
 				<li>
 					<a href="#edit">
-						<img src="images/site/icons/edit_16x16_black.png" width="16" height="16" alt="edit">
+						<img src="<?=img('/images/site/icons/edit_16x16_black.png')?>" width="16" height="16" alt="edit">
 					</a>
 				</li>
 				<li>
 					<a href="#delete">
-						<img src="images/site/icons/delete_16x16_black.png" width="16" height="16" alt="delete">
+						<img src="<?=img('/images/site/icons/delete_16x16_black.png')?>" width="16" height="16" alt="delete">
 					</a>
 				</li>
 			</ul>
 		<? } ?>
 	</li>
 <? }); ?>
-
 </script>
 <script type="text/x-lb-tpl" name="personas/select">
 <div class="select-persona">
@@ -773,7 +775,7 @@ var action = persona.id ? 'Edit' : 'Add';
 		<div class="search">
 			<form class="standard-form">
 				<input <? if(tabindex) { ?>tabindex="<?=tabindex?>"<? } ?> type="text" name="screenname" placeholder="Type the screenname of the person you're searching for.">
-				<img class="load" src="images/site/icons/load_16x16.gif" width="16" height="16" alt="WORKING!!!1">
+				<img class="load" src="<?=img('/images/site/icons/load_16x16.gif')?>" width="16" height="16" alt="WORKING!!!1">
 			</form>
 			<div class="personas">
 				<div class="personas-list"></div>
@@ -781,7 +783,6 @@ var action = persona.id ? 'Edit' : 'Add';
 		</div>
 	<? } ?>
 </div>
-
 </script>
 <script type="text/x-lb-tpl" name="tags/index">
 <!--
@@ -826,7 +827,6 @@ var action = persona.id ? 'Edit' : 'Add';
 		<input type="submit" value="Join" tabindex="4">
 	</form>
 </div>
-
 </script>
 <script type="text/x-lb-tpl" name="users/login">
 <div class="userform login">
@@ -841,8 +841,5 @@ var action = persona.id ? 'Edit' : 'Add';
 	</form>
 </div>
 </script>
-
   </body>
 </html>
-
-
