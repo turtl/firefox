@@ -22,18 +22,20 @@
 		<script src="app/models/persona.js"></script>
 		<script src="app/models/setting.js"></script>
 		<script src="app/models/user.js"></script>
-		<script src="bookmark.js"></script>
-		<style type="text/css">
-			body {font-family: arial; font-size: 13px;}
-			h1 {margin: 0 0 12px 0; padding: 0; font-family: arial; font-size: 20px; color: #666;}
-			span.note {color: #ee5555;}
-			form input[type=password],
-			form input[type=text] {display: block; width: 95%; margin: 0 0 6px 0; padding: 6px 2%; font-size: 14px;}
-			img.load {visibility: hidden;}
-		</style>
+		<script src="join.js"></script>
+		<link rel="stylesheet" href="addon.css">
 	</head>
 	<body>
-		<h1>Bookmark</h1>
+		<h1>
+			Create account
+			<img class="load" src="app/images/site/icons/load_16x16.gif" alt="WORKING" title="WORKING" width="16" height="16">
+		</h1>
+		<form name="join">
+			<input type="text" name="username" value="" placeholder="username">
+			<input type="password" name="password" value="" placeholder="password">
+			<input type="password" name="confirm" value="" placeholder="confirm password">
+			<span class="note"></span>
+			<input type="submit" value="Join">
+		</form>
 	</body>
 </html>
-
