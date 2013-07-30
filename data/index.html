@@ -193,6 +193,9 @@ var action	=	(board.id ? 'Edit' : 'Add');
 <script type="text/x-lb-tpl" name="boards/manage">
 <h1>Manage boards</h1>
 <div class="board-manage">
+	<? if(!enable_sharing) { ?>
+		<a href="#add-persona">Add a persona</a> to enable sharing.
+	<? } ?>
 	<div class="button add">
 		<span>New board</span>
 	</div>
@@ -213,11 +216,13 @@ var action	=	(board.id ? 'Edit' : 'Add');
 							</a>
 						</li>
 					<? } else { ?>
-						<li class="<? if(b.share_enabled) { ?>highlight<? } ?>">
-							<a href="#share" class="<?=b.id?>" title="Share board">
-								<img src="<?=img('/images/site/icons/share_16x16_black.png')?>" alt="share" width="16" height="16">
-							</a>
-						</li>
+						<? if(enable_sharing) { ?>
+							<li class="<? if(b.share_enabled) { ?>highlight<? } ?>">
+								<a href="#share" class="<?=b.id?>" title="Share board">
+									<img src="<?=img('/images/site/icons/share_16x16_black.png')?>" alt="share" width="16" height="16">
+								</a>
+							</li>
+						<? } ?>
 						<li>
 							<a href="#edit" class="<?=b.id?>" title="Edit board">
 								<img src="<?=img('/images/site/icons/edit_16x16_black.png')?>" alt="Edit" width="16" height="16">
@@ -670,7 +675,10 @@ if(!title) title = note.url.replace(/^[\w]+:\/\/(www\.)?/i, '');
 <?
 var action = persona.id ? 'Edit' : 'Add';
 ?>
-<h1><?=action?> persona <small><a href="#personas">&laquo; Back to your personas</a></small></h1>
+<h1>
+	<?=action?> persona
+	<small><a href="#personas">&laquo; Back to <? if(return_to_manage) { ?>board management<? } else { ?>your personas<? } ?></a></small>
+</h1>
 <div class="persona-edit">
 	<form class="standard-form">
 		<input tabindex="1" type="text" name="screenname" value="<?=persona.screenname?>" placeholder="Screen name (valid characters: &quot;A-Z0-9.&quot;)">
