@@ -1,10 +1,10 @@
 {
-  "name": "firefox",
-  "fullName": "firefox",
+  "name": "tagit",
+  "fullName": "Tagit",
   "id": "jid1-FIPhY9ICA4SS9g",
-  "description": "a basic add-on",
-  "author": "",
-  "license": "MPL 2.0",
+  "description": "An encrypted note/bookmarking tool.",
+  "author": "Andrew Lyon, Jeff Lyon, Drew Cirincione",
+  "license": "MIT",
   "version": "0.1",
   "dependencies": []
 }

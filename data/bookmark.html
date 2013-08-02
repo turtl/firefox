@@ -4,33 +4,40 @@
 		<meta http-equiv="Content-Type" content="test/html; charset=utf-8">
 		<meta http-equiv="Content-Language" content="en">
 		<script src="app/library/mootools-core-1.4.5.js"></script>
-		<script src="app/library/mootools-more-1.4.0.1.js"></script>
 		<script src="app/library/composer/composer.js"></script>
 		<script src="app/library/composer/composer.relational.js"></script>
 		<script src="app/library/composer/composer.filtercollection.js"></script>
-		<script src="app/library/composer/composer.keyboard.js"></script>
 		<script>Composer.suppress_warnings = true;</script>
+		<script src="app/config/config.js"></script>
+		<script src="app/config/auth.js"></script>
+
 		<script src="app/library/CryptoJS v3.1.2/aes.js"></script>
 		<script src="app/library/CryptoJS v3.1.2/pad-ansix923-min.js"></script>
 		<script src="app/library/CryptoJS v3.1.2/pad-iso97971-min.js"></script>
 		<script src="app/library/CryptoJS v3.1.2/pbkdf2.js"></script>
 		<script src="app/library/CryptoJS v3.1.2/sha256.js"></script>
+		<script src="app/library/addon-adaptors/firefox.js"></script>
+		<script src="app/library/base64.js"></script>
+		<script src="app/library/functions.js"></script>
 		<script src="app/library/tcrypt.js"></script>
 		<script src="app/library/timer.js"></script>
+
 		<script src="app/tagit/api.js"></script>
+		<script src="app/tagit/sync.js"></script>
 		<script src="app/models/_protected.js"></script>
+		<script src="app/models/board.js"></script>
+		<script src="app/models/category.js"></script>
+		<script src="app/models/message.js"></script>
+		<script src="app/models/note.js"></script>
 		<script src="app/models/persona.js"></script>
+		<script src="app/models/profile.js"></script>
+		<script src="app/models/search.js"></script>
 		<script src="app/models/setting.js"></script>
+		<script src="app/models/tag.js"></script>
 		<script src="app/models/user.js"></script>
 		<script src="bookmark.js"></script>
-		<style type="text/css">
-			body {font-family: arial; font-size: 13px;}
-			h1 {margin: 0 0 12px 0; padding: 0; font-family: arial; font-size: 20px; color: #666;}
-			span.note {color: #ee5555;}
-			form input[type=password],
-			form input[type=text] {display: block; width: 95%; margin: 0 0 6px 0; padding: 6px 2%; font-size: 14px;}
-			img.load {visibility: hidden;}
-		</style>
+		<link rel="stylesheet" href="addon.css">
+		<link rel="stylesheet" href="bookmark.css">
 	</head>
 	<body>
 		<h1>Bookmark</h1>
