@@ -81,6 +81,12 @@ var tagit	=	{
 			this.sync_timer.start();
 		}.bind(this);
 		this.sync_timer.start();
+
+		// listen for syncing from addon
+		if(window.port) window.port.bind('profile-sync', function(sync) {
+			if(!sync) return false;
+			tagit.profile.process_sync(data_from_addon(sync));
+		});
 	}
 };
 
