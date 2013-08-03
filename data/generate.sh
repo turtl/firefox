@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### This script generates index.html, which loads all needed javascript and
-### templates for the app.
+### templates for the app. It also generates bookmark.html.
 
 ## -----------------------------------------------------------------------------
 ## generate CSS links
@@ -86,4 +86,15 @@ index2=${index#*\{\{genviews\}\}}
 index="${index1}${views}${index2}"
 
 echo -ne "$index" > index.html
+
+
+## -----------------------------------------------------------------------------
+## generate bookmark.html
+## -----------------------------------------------------------------------------
+# copy index.html to bookmark.html, replacing app/tagit.js with bookmark.js
+cat index.html | sed 's|app/tagit\.js|bookmark.js|' > bookmark.html
+# get rid of the index.html body
+perl -pi -e 'BEGIN{undef $/;} s|<body.*?<script type="text/x-lb-tpl"|<body><h1>Stand by...</h1>\n\n<script type="text/x-lb-tpl"|smg' bookmark.html
+rm -f bookmark.html.bak
+
 
