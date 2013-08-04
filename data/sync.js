@@ -3,6 +3,11 @@ var $ES = function(selector, filter){ return ($(filter) || document).getElements
 
 var _in_ext	=	true;
 var port	=	new FirefoxAddonPort(addon.port);
+var barfr	=	{
+	barf: function(msg) {
+		port.send('error', msg);
+	}
+};
 
 // ------------------------------------------------------------------------------
 // replace a very minimal version of the tagit.js app object for basic syncing
@@ -89,6 +94,7 @@ addon.port.on('init', function(user_auth) {
 			};
 		}
 	);
+
 	tagit.init(user_auth);
 });
 
