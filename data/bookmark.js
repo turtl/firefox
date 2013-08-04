@@ -4,7 +4,13 @@ var $ES = function(selector, filter){ return ($(filter) || document).getElements
 var _in_ext		=	true;
 var _profile	=	false;
 var port		=	new FirefoxAddonPort(addon.port);
-var barfr		=	null;
+var barfr		=	{
+	barf: function(msg) {
+		console.log('barfr: ', msg);
+		port.send('error', msg);
+	}
+};
+
 
 // ------------------------------------------------------------------------------
 // replace a very minimal version of the tagit.js app object for basic syncing
@@ -73,20 +79,15 @@ var tagit	=	{
 
 	setup_syncing: function()
 	{
-		tagit.profile.get_sync_time();
-		this.sync_timer = new Timer(10000);
-		this.sync_timer.end = function()
-		{
-			tagit.profile.sync();
-			this.sync_timer.start();
-		}.bind(this);
-		this.sync_timer.start();
-
 		// listen for syncing from addon
 		if(window.port) window.port.bind('profile-sync', function(sync) {
 			if(!sync) return false;
 			tagit.profile.process_sync(data_from_addon(sync));
 		});
+	},
+
+	loading: function(yesno)
+	{
 	}
 };
 
@@ -120,9 +121,6 @@ addon.port.on('init', function(user_auth, profile_data) {
 
 	// make sure inline templates are loaded
 	Template.initialize();
-
-	// create the barfr
-	barfr	=	new Barfr('barfr', {});
 
 	tagit.init(user_auth);
 });

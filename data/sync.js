@@ -5,6 +5,7 @@ var _in_ext	=	true;
 var port	=	new FirefoxAddonPort(addon.port);
 var barfr	=	{
 	barf: function(msg) {
+		console.log('barfr: ', msg);
 		port.send('error', msg);
 	}
 };
@@ -48,7 +49,7 @@ var tagit	=	{
 		this.profile	=	new Profile();
 		this.profile.initial_load({
 			complete: function() {
-				tagit.profile.persist();
+				tagit.profile.persist({now: true});
 				tagit.setup_syncing();
 				addon.port.emit('profile-load-complete');
 			}
@@ -65,6 +66,10 @@ var tagit	=	{
 			this.sync_timer.start();
 		}.bind(this);
 		this.sync_timer.start();
+	},
+
+	loading: function(yesno)
+	{
 	}
 };
 
