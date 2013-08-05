@@ -6,6 +6,10 @@
 ## -----------------------------------------------------------------------------
 ## generate CSS links
 ## -----------------------------------------------------------------------------
+
+# move into data dir
+pushd data/ > /dev/null
+
 css=""
 cssfiles="`find app/css -name '*.css' \
 	| sort \
@@ -97,4 +101,6 @@ cat index.html | sed 's|app/tagit\.js|bookmark.js|' > bookmark.html
 perl -pi -e 'BEGIN{undef $/;} s|<body.*?<script type="text/x-lb-tpl"|<body><h1>Stand by...</h1>\n\n<script type="text/x-lb-tpl"|smg' bookmark.html
 rm -f bookmark.html.bak
 
+# restore dir
+popd > /dev/null
 

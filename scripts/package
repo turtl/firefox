@@ -1,0 +1,22 @@
+#!/bin/bash
+
+### This script regenerates the packaged html templates, copies any needed files
+### (read: config files) to their proper place, and packages the tagit XPI file.
+###
+### Note that this script is meant to be run in the top-level addon folder, not
+### not in the scripts/ folder.
+
+# path to cfx
+CFX=/c/htdocs/addon-sdk-1.14/bin/cfx
+
+# generate templates
+./scripts/generate-templates
+
+# copy config over local config
+cp lib/config.js lib/config.local.js
+cp lib/config.live.js lib/config.js
+mv lib/config.local.js lib/config.js
+
+# package the addon
+$CFX xpi
+
