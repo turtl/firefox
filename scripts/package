@@ -16,6 +16,7 @@ CFX=/c/htdocs/addon-sdk-1.14/bin/cfx
 cp lib/config.js lib/config.local.js
 cp lib/config.live.js lib/config.js
 mv lib/config.local.js lib/config.js
+chmod 644 lib/config.js lib/config.live.js
 
 # package the addon
 $CFX xpi
