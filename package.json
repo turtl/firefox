@@ -1,10 +1,10 @@
 {
-  "name": "tagit",
-  "fullName": "Tagit",
-  "id": "jid1-FIPhY9ICA4SS9g",
-  "description": "An encrypted note/bookmarking tool.",
-  "author": "Andrew Lyon, Jeff Lyon, Drew Cirincione",
-  "license": "MIT",
-  "version": "0.1",
-  "dependencies": []
+	"name": "tagit",
+	"fullName": "Tagit",
+	"id": "tagit@lyonbros.com",
+	"description": "An encrypted note/bookmarking tool.",
+	"author": "Andrew Lyon, Jeff Lyon, Drew Cirincione",
+	"license": "MIT",
+	"version": "0.1",
+	"dependencies": []
 }

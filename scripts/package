@@ -6,18 +6,64 @@
 ### Note that this script is meant to be run in the top-level addon folder, not
 ### not in the scripts/ folder.
 
+# ------------------------------------------------------------------------------
+# config section
+# ------------------------------------------------------------------------------
 # path to cfx
 CFX=/c/htdocs/addon-sdk-1.14/bin/cfx
+# tmp dir for generating package
+TMP=/tmp/tagit-package
+# the resulting XPI file (*must* be the same as what cfx xpi produces)
+XPI=tagit.xpi
 
-# generate templates
-./scripts/generate-templates
+nogen=$1
 
-# copy config over local config
-cp lib/config.js lib/config.local.js
-cp lib/config.live.js lib/config.js
-mv lib/config.local.js lib/config.js
-chmod 644 lib/config.js lib/config.live.js
+if [ "$nogen" != "--skip-tpl" ]; then
+	# generate templates
+	echo -n "Regenerating templates so we have the freshest versions..."
+	./scripts/generate-templates
+	echo "done."
+fi
 
 # package the addon
-$CFX xpi
+echo "Packaging addon (via cfx)."
+$CFX xpi > /dev/null
+
+# grab the app dir
+pushd data/app/ > /dev/null
+APPDIR=`pwd -P`
+popd > /dev/null
+
+# create/enter our temp dir
+mkdir -p $TMP
+rm -rf $TMP/*
+EXTDIR=`realpath .`
+pushd $TMP/ > /dev/null
+
+echo -n "Upacking addon to make modifications..."
+unzip $EXTDIR/$XPI > /dev/null
+echo "done."
+
+echo "  - copying live config over local"
+cp $EXTDIR/lib/config.live.js resources/tagit/lib/config.js
+rm -f resources/tagit/data/app
+
+echo "  - symlinking app subfolder"
+ln -s $APPDIR resources/tagit/data/app
+
+echo "  - setting applicable permissions"
+chmod 644 -R resources/addon-sdk
+chmod 644 bootstrap.js
+
+echo -n "Repackaging..."
+zip -r tagit . -x *.git* > /dev/null
+echo "done."
+
+mv tagit.zip $EXTDIR/$XPI
+popd > /dev/null
+
+echo "Clearing tmp dir ($TMP/)"
+rm -rf $TMP
+
+echo "Complete. Created fully-packaged file: $XPI."
 
