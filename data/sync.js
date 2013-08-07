@@ -59,13 +59,11 @@ var tagit	=	{
 	setup_syncing: function()
 	{
 		tagit.profile.get_sync_time();
-		this.sync_timer = new Timer(10000);
-		this.sync_timer.end = function()
-		{
+
+		// set up manual syncing
+		if(window.port) window.port.bind('do-sync', function() {
 			tagit.profile.sync();
-			this.sync_timer.start();
-		}.bind(this);
-		this.sync_timer.start();
+		});
 	},
 
 	loading: function(yesno)
