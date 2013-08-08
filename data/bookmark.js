@@ -4,6 +4,8 @@ var $ES = function(selector, filter){ return ($(filter) || document).getElements
 var _in_ext		=	true;
 var _profile	=	false;
 var port		=	new FirefoxAddonPort(addon.port);
+var _base_url	=	false;
+var modal		=	false;
 var barfr		=	{
 	barf: function(msg) {
 		console.log('barfr: ', msg);
@@ -98,8 +100,9 @@ window.addEvent('domready', function() {
 	addon.port.emit('loaded');
 });
 
-addon.port.on('init', function(user_auth, profile_data) {
+addon.port.on('init', function(user_auth, profile_data, base) {
 	window._profile			=	profile_data;
+	window._base_url		=	base;
 	window.__site_url		=	window.__site_url || '';
 	window.__api_url		=	window.__api_url || '';
 	window.__api_key		=	window.__api_key || '';

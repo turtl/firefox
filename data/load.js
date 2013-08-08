@@ -1,6 +1,6 @@
 if(unsafeWindow.tagit)
 {
-	self.port.on('do_load', function(auth, base, profile_data) {
+	self.port.on('do_load', function(auth, profile_data, base) {
 		unsafeWindow._in_ext	=	true;
 		unsafeWindow._auth		=	auth;
 		unsafeWindow._base_url	=	base;

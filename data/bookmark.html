@@ -109,16 +109,24 @@
 <?
 var action	=	(board.id ? 'Edit' : 'Add');
 ?>
-<h1>
-	<?=action?> board
-	<? if(return_to_manage) { ?>
-		<small><a href="#manage">&laquo; Back to board manager</a></small>
-	<? } ?>
-</h1>
-<div class="board-edit clear">
+<? if(!bare) { ?>
+	<h1>
+		<?=action?> board
+		<? if(return_to_manage) { ?>
+			<small><a href="#manage">&laquo; Back to board manager</a></small>
+		<? } ?>
+	</h1>
+<? } ?>
+<div class="board-edit clear <? if(bare) { ?>bare<? } ?>">
 	<form>
-		<input type="submit" value="<?=action?> board">
-		<input type="text" name="name" value="<?=board.title?>" placeholder="Board name">
+		<? if(bare) { ?>
+			<input type="text" name="name" value="<?=board.title?>" placeholder="Board name">
+			<a href="#submit"><img src="<?=img('/images/site/icons/check_16x16.png')?>" width="16" height="16" alt="submit"></a>
+			<a href="#cancel"><img src="<?=img('/images/site/icons/x_16x16.png')?>" width="16" height="16" alt="cancel"></a>
+		<? } else { ?>
+			<input type="submit" value="<?=action?> board">
+			<input type="text" name="name" value="<?=board.title?>" placeholder="Board name">
+		<? } ?>
 	</form>
 </div>
 </script>
@@ -213,7 +221,7 @@ var action	=	(board.id ? 'Edit' : 'Add');
 <script type="text/x-lb-tpl" name="boards/share">
 <h1>
 	Sharing: <?=board.title?>
-	<small><a href="#back">&laquo; Back to board manageer</a></small>
+	<small><a href="#back">&laquo; Back to board manager</a></small>
 </h1>
 <div class="board-share">
 	<div class="button add share">
@@ -297,11 +305,11 @@ var action	=	(board.id ? 'Edit' : 'Add');
 </div>
 </script>
 <script type="text/x-lb-tpl" name="modules/header_bar">
-<? if(user.id) { ?>
-	<div class="apps"></div>
-<? } ?>
-
 <div class="actions">
+	<? if(user.id) { ?>
+		<div class="apps clear"></div>
+	<? } ?>
+
 	<? if(user.id) { ?>
 		<a class="menu" href="#menu"><img src="<?=img('/images/site/icons/menu_37x29.png')?>" width="37" height="29" alt="Menu"></a>
 		<ul class="menu">
@@ -459,9 +467,9 @@ var format_tag = function(tagname, selected)
 </script>
 <script type="text/x-lb-tpl" name="notes/index">
 <div class="note-actions">
-	<a href="#add-note" class="add-note" title="Add a new note to the current board (shortcut `a`)">
+	<div class="button add note" title="Add a new note to the current board (shortcut `a`)">
 		<span>Add note</span>
-	</a>
+	</div>
 	<ul class="list-type hidden">
 		<li>
 			<a class="masonry <? if(display_type == 'masonry') { ?>sel<? } ?>" href="#listing" title="Display notes as an arranged grid">
