@@ -34,6 +34,7 @@
     </div>
     <div id="wrap-modal">
       <div id="wrap">
+        <div class="sidebar-bg"></div>
         <header class="clear">
           <h1>
             <a href="/">tag<span>.</span>it
