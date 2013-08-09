@@ -9,5 +9,6 @@
 	"dependencies": [
 		"vold-utils",
 		"toolbar-button-complete"
-	]
+	],
+	"permissions": {"private-browsing": true}
 }
