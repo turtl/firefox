@@ -49,7 +49,7 @@ exports.ToolbarButton = function ToolbarButton(options) {
 		toolbarID = "",
 		insertbefore = "",
 		destroyed = false,
-		buttons = [],
+		buttons = [],	// AL - added to track buttons in ALL windows
 		destroyFuncs = [];
 
 	var delegate = {
@@ -70,6 +70,7 @@ exports.ToolbarButton = function ToolbarButton(options) {
 			}
 
 			let tbb = xul("toolbarbutton");
+			buttons.push(tbb);	// AL - track this button in the button list
 			tbb.setAttribute("id", options.id);
 			if (options.menu) {
 				tbb.setAttribute("type", "menu-button");
@@ -108,9 +109,9 @@ exports.ToolbarButton = function ToolbarButton(options) {
 			}
 
 			if (options.onCommand || options.panel) {
-				tbb.addEventListener("command", function () { 
+				tbb.addEventListener("command", function (e) { 
 					if (options.onCommand) {
-						options.onCommand(tbb, options);
+						options.onCommand(e, tbb, options);
 					}
 					if (options.panel) {
 						options.panel.show({}, tbb);
@@ -201,6 +202,25 @@ exports.ToolbarButton = function ToolbarButton(options) {
 			}
 			else return false;
 		},
+		// =====================================================
+		// AL - functions added to update multiple items at once
+		// =====================================================
+		buttons: function(cb) {
+			buttons.forEach(function(btn) {
+				cb(btn);
+			});
+		},
+		updateMenus: function(items) {
+			this.buttons(function(button) {
+				if(!button) return false;
+				var menu = createMenu({id: options.id+'_menu', items: items}, true, button.id);
+				button.removeChild(button.firstChild);
+				button.appendChild(menu);
+			});
+		},
+		// =====================================================
+		// /AL
+		// =====================================================
 		destroy: function () {
 			if (destroyed) return;
 
