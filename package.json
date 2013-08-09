@@ -6,5 +6,8 @@
 	"author": "Andrew Lyon, Jeff Lyon, Drew Cirincione",
 	"license": "MIT",
 	"version": "0.1",
-	"dependencies": []
+	"dependencies": [
+		"vold-utils",
+		"toolbar-button-complete"
+	]
 }
