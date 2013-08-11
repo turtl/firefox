@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="app/css/site/bookmark.css">
 <link rel="stylesheet" href="app/css/site/categories.css">
 <link rel="stylesheet" href="app/css/site/dashboard.css">
+<link rel="stylesheet" href="app/css/site/invites.css">
 <link rel="stylesheet" href="app/css/site/notes.css">
 <link rel="stylesheet" href="app/css/site/notifications.css">
 <link rel="stylesheet" href="app/css/site/personas.css">
@@ -74,6 +75,7 @@
 <script src="app/controllers/bookmark.js"></script>
 <script src="app/controllers/categories.js"></script>
 <script src="app/controllers/dashboard.js"></script>
+<script src="app/controllers/invites/email.js"></script>
 <script src="app/controllers/notes/edit.js"></script>
 <script src="app/controllers/notes/edit_tags.js"></script>
 <script src="app/controllers/notes/index.js"></script>
@@ -94,6 +96,7 @@
 <script src="app/models/_protected.js"></script>
 <script src="app/models/board.js"></script>
 <script src="app/models/category.js"></script>
+<script src="app/models/invite.js"></script>
 <script src="app/models/message.js"></script>
 <script src="app/models/note.js"></script>
 <script src="app/models/persona.js"></script>
@@ -264,7 +267,7 @@ var action	=	(board.id ? 'Edit' : 'Add');
 		<div class="select clear"></div>
 		<form class="standard-form">
 			<div class="submit">
-				<input tabindex="4" type="submit" value="Invite">
+				<input tabindex="4" type="submit" value="Invite" disabled>
 			</div>
 		</form>
 	</div>
@@ -275,7 +278,7 @@ var action	=	(board.id ? 'Edit' : 'Add');
 				<? personas.each(function(p) { ?>
 					<li class="persona_<?=p.id?> clear">
 						<h3>
-							<?=p.screenname?>
+							<?=p.email?>
 							<? if(p.privs.i) { ?>
 								<small>- invite pending</small>
 							<? } ?>
@@ -333,6 +336,21 @@ var action	=	(board.id ? 'Edit' : 'Add');
 			<div class="tags clear"></div>
 		</div>
 	</div>
+</div>
+</script>
+<script type="text/x-lb-tpl" name="invites/email">
+<div class="invite">
+	<h2>Invite <?=invite.email?> to Tagit</h2>
+	<form class="standard-form">
+		<div class="split clear">
+			<input type="text" name="secret" value="" tabindex="1" placeholder="Share Secret (optional)">
+			<p>
+				A recommended passphrase that protects the board in the event
+				the invite code is intercepted. It must be sent to the invitee
+				separately (by phone call, text msg, etc).
+			</p>
+		</div>
+	</form>
 </div>
 </script>
 <script type="text/x-lb-tpl" name="modules/header_bar">
@@ -695,16 +713,15 @@ var action = persona.id ? 'Edit' : 'Add';
 </h1>
 <div class="persona-edit">
 	<form class="standard-form">
-		<input tabindex="1" type="text" name="screenname" value="<?=persona.screenname?>" maxlength="24" placeholder="Screen name (valid characters: &quot;A-Z0-9.&quot;)">
+		<input tabindex="1" type="text" name="email" value="<?=persona.email?>" maxlength="24" placeholder="Your email address">
 		<img class="load" src="<?=img('/images/site/icons/load_16x16.gif')?>" width="16" height="16" alt="WORKING!!!1">
-		<p class="taken">(type your screenname above to see if it's available)</p>
+		<p class="taken">(type your email above to see if it's available)</p>
 
 		<input tabindex="2" type="text" name="name" value="<?=persona.name?>" placeholder="Full name (optional)">
-		<input tabindex="3" type="text" name="email" value="<?=persona.email?>" placeholder="Email (optional)">
 
 		<span class="clearMe"></span>
 		<div class="submit">
-			<input tabindex="5" type="submit" value="<?=action?> persona">
+			<input tabindex="4" type="submit" value="<?=action?> persona">
 		</div>
 	</form>
 	<div class="info content">
@@ -713,7 +730,7 @@ var action = persona.id ? 'Edit' : 'Add';
 			personas are public and stored in plaintext in the database</strong>,
 			allowing other users to find you and share with you (and also
 			allowing you to share with others). The only required information
-			for a persona is the screen name, which must be unique.
+			for a persona is the email, which must be unique.
 		</p>
 		<p>
 			While personas themselves are public, <strong>the link between a
@@ -751,14 +768,9 @@ var action = persona.id ? 'Edit' : 'Add';
 </script>
 <script type="text/x-lb-tpl" name="personas/list">
 <? personas.each(function(p) { ?>
-	<?
-		var attr = [];
-		if(p.name) attr.push(p.name);
-		if(p.email) attr.push(p.email);
-	?>
 	<li class="persona_<?=p.id?> clear">
-		<h3><?=p.screenname?></h3>
-		<small><?=attr.join('&nbsp;&nbsp;-&nbsp;&nbsp;')?></small>
+		<h3><?=p.email?></h3>
+		<small><?=p.name?></small>
 		<? if(show_edit) { ?>
 			<ul>
 				<li>
@@ -780,23 +792,18 @@ var action = persona.id ? 'Edit' : 'Add';
 <div class="select-persona">
 	<? if(persona.id) { ?>
 		<div class="persona">
-			<h3><?=persona.screenname?></h3>
+			<h3><?=persona.email?></h3>
 			<? if(!lock) { ?>
 				<a href="#change" title="Pick another persona">change</a>
 			<? } ?>
 			<p>
-				<?
-				var attr = [];
-				if(persona.name) attr.push(persona.name);
-				if(persona.email) attr.push(persona.email);
-				?>
-				<?=attr.join(' - ')?>
+				<?=persona.name?>
 			</p>
 		</div>
 	<? } else { ?>
 		<div class="search">
 			<form class="standard-form">
-				<input <? if(tabindex) { ?>tabindex="<?=tabindex?>"<? } ?> type="text" name="screenname" placeholder="Type the screenname of the person you're searching for.">
+				<input <? if(tabindex) { ?>tabindex="<?=tabindex?>"<? } ?> type="text" name="email" placeholder="Type the email of the person you're searching for.">
 				<img class="load" src="<?=img('/images/site/icons/load_16x16.gif')?>" width="16" height="16" alt="WORKING!!!1">
 			</form>
 			<div class="personas">
