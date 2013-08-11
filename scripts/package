@@ -10,7 +10,7 @@
 # config section
 # ------------------------------------------------------------------------------
 # path to cfx
-CFX=/c/htdocs/addon-sdk-1.14/bin/cfx
+CFX=../../../addon-sdk-1.14/bin/cfx
 # tmp dir for generating package
 TMP=/tmp/tagit-package
 # the resulting XPI file (*must* be the same as what cfx xpi produces)
