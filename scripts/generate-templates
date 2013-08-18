@@ -48,8 +48,8 @@ jsfiles="`find app/library -name '*.js' \
 	| sed 's| |___|g' `"
 for jsfile in $jsfiles; do print_js $jsfile; done
 
-print_js "app/tagit.js"
-path_to_js "app/tagit"
+print_js "app/turtl.js"
+path_to_js "app/turtl"
 path_to_js "app/handlers"
 path_to_js "app/controllers"
 path_to_js "app/models"
@@ -95,8 +95,8 @@ echo -ne "$index" > index.html
 ## -----------------------------------------------------------------------------
 ## generate bookmark.html
 ## -----------------------------------------------------------------------------
-# copy index.html to bookmark.html, replacing app/tagit.js with bookmark.js
-cat index.html | sed 's|app/tagit\.js|bookmark.js|' > bookmark.html
+# copy index.html to bookmark.html, replacing app/turtl.js with bookmark.js
+cat index.html | sed 's|app/turtl\.js|bookmark.js|' > bookmark.html
 # get rid of the index.html body
 perl -pi -e 'BEGIN{undef $/;} s|<body.*?<script type="text/x-lb-tpl"|<body><h1>Stand by...</h1>\n\n<script type="text/x-lb-tpl"|smg' bookmark.html
 rm -f bookmark.html.bak
