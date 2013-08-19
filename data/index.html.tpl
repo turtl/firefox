@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="test/html; charset=utf-8">
     <meta http-equiv="Content-Language" content="en">
-    <title>tag.it
+    <title>Turtl
     </title>
     <link rel="stylesheet" href="app/css/reset.css">
     <link rel="stylesheet" href="app/css/template.css">
@@ -37,7 +37,7 @@
         <div class="sidebar-bg"></div>
         <header class="clear">
           <h1>
-            <a href="/">tag<span>.</span>it
+            <a href="/">Turtl<span>.</span>
             </a>
           </h1>
           <div class="loading">

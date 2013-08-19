@@ -15,10 +15,10 @@ var barfr		=	{
 
 
 // ------------------------------------------------------------------------------
-// replace a very minimal version of the tagit.js app object for basic syncing
+// replace a very minimal version of the turtl.js app object for basic syncing
 // purposes. no routing, no pages, etc.
 // ------------------------------------------------------------------------------
-var tagit	=	{
+var turtl	=	{
 	// holds the user model
 	user: null,
 
@@ -51,9 +51,9 @@ var tagit	=	{
 
 	init: function(auth)
 	{
-		tagit.user	=	new User();
-		tagit.user.login_from_auth(auth);
-		tagit.load_profile();
+		turtl.user	=	new User();
+		turtl.user.login_from_auth(auth);
+		turtl.load_profile();
 		var html	=	$(document.body).getParent();
 		html.setStyles({
 			'overflow': 'visible',
@@ -68,8 +68,8 @@ var tagit	=	{
 		this.profile	=	new Profile();
 		this.profile.initial_load({
 			complete: function() {
-				tagit.profile.persist();
-				tagit.setup_syncing();
+				turtl.profile.persist();
+				turtl.setup_syncing();
 				addon.port.emit('profile-load-complete');
 				$(document.body).innerHTML	=	'<div id="wrap-modal"><div id="wrap"><div id="main"></div></div></div>';
 				new BookmarkController({
@@ -84,7 +84,7 @@ var tagit	=	{
 		// listen for syncing from addon
 		if(window.port) window.port.bind('profile-sync', function(sync) {
 			if(!sync) return false;
-			tagit.profile.process_sync(data_from_addon(sync));
+			turtl.profile.process_sync(data_from_addon(sync));
 		});
 	},
 
@@ -106,7 +106,7 @@ addon.port.on('init', function(user_auth, profile_data, base) {
 	window.__site_url		=	window.__site_url || '';
 	window.__api_url		=	window.__api_url || '';
 	window.__api_key		=	window.__api_key || '';
-	tagit.api				=	new Api(
+	turtl.api				=	new Api(
 		__api_url || '',
 		__api_key || '',
 		function(cb_success, cb_fail) {
@@ -125,6 +125,6 @@ addon.port.on('init', function(user_auth, profile_data, base) {
 	// make sure inline templates are loaded
 	Template.initialize();
 
-	tagit.init(user_auth);
+	turtl.init(user_auth);
 });
 

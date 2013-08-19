@@ -11,10 +11,10 @@ var barfr	=	{
 };
 
 // ------------------------------------------------------------------------------
-// replace a very minimal version of the tagit.js app object for basic syncing
+// replace a very minimal version of the turtl.js app object for basic syncing
 // purposes. no routing, no pages, etc.
 // ------------------------------------------------------------------------------
-var tagit	=	{
+var turtl	=	{
 	// holds the user model
 	user: null,
 
@@ -37,9 +37,9 @@ var tagit	=	{
 
 	init: function(auth)
 	{
-		tagit.user	=	new User();
-		tagit.user.login_from_auth(auth);
-		tagit.load_profile();
+		turtl.user	=	new User();
+		turtl.user.login_from_auth(auth);
+		turtl.load_profile();
 	},
 
 	load_profile: function()
@@ -49,8 +49,8 @@ var tagit	=	{
 		this.profile	=	new Profile();
 		this.profile.initial_load({
 			complete: function() {
-				tagit.profile.persist({now: true});
-				tagit.setup_syncing();
+				turtl.profile.persist({now: true});
+				turtl.setup_syncing();
 				addon.port.emit('profile-load-complete');
 			}
 		});
@@ -58,11 +58,11 @@ var tagit	=	{
 
 	setup_syncing: function()
 	{
-		tagit.profile.get_sync_time();
+		turtl.profile.get_sync_time();
 
 		// set up manual syncing
 		if(window.port) window.port.bind('do-sync', function() {
-			tagit.profile.sync();
+			turtl.profile.sync();
 		});
 	},
 
@@ -82,7 +82,7 @@ addon.port.on('init', function(user_auth) {
 	window.__site_url		=	window.__site_url || '';
 	window.__api_url		=	window.__api_url || '';
 	window.__api_key		=	window.__api_key || '';
-	tagit.api				=	new Api(
+	turtl.api				=	new Api(
 		__api_url || '',
 		__api_key || '',
 		function(cb_success, cb_fail) {
@@ -98,14 +98,14 @@ addon.port.on('init', function(user_auth) {
 		}
 	);
 
-	tagit.init(user_auth);
+	turtl.init(user_auth);
 });
 
 addon.port.on('start', function() {
-	tagit.sync	=	true;
+	turtl.sync	=	true;
 });
 
 addon.port.on('stop', function() {
-	tagit.sync	=	false;
+	turtl.sync	=	false;
 });
 

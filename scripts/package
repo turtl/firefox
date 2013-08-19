@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ### This script regenerates the packaged html templates, copies any needed files
-### (read: config files) to their proper place, and packages the tagit XPI file.
+### (read: config files) to their proper place, and packages the turtl XPI file.
 ###
 ### Note that this script is meant to be run in the top-level addon folder, not
 ### not in the scripts/ folder.
@@ -12,9 +12,9 @@
 # path to cfx
 CFX=../../../addon-sdk-1.14/bin/cfx
 # tmp dir for generating package
-TMP=/tmp/tagit-package
+TMP=/tmp/turtl-package
 # the resulting XPI file (*must* be the same as what cfx xpi produces)
-XPI=tagit.xpi
+XPI=turtl.xpi
 
 nogen=$1
 
@@ -45,11 +45,11 @@ unzip $EXTDIR/$XPI > /dev/null
 echo "done."
 
 echo "  - copying live config over local"
-cp $EXTDIR/lib/config.live.js resources/tagit/lib/config.js
-rm -f resources/tagit/data/app
+cp $EXTDIR/lib/config.live.js resources/turtl/lib/config.js
+rm -f resources/turtl/data/app
 
 echo "  - symlinking app subfolder"
-ln -s $APPDIR resources/tagit/data/app
+ln -s $APPDIR resources/turtl/data/app
 
 echo "  - setting applicable permissions"
 find resources/addon-sdk -type d -exec chmod 755 {} \;
@@ -57,10 +57,10 @@ find resources/addon-sdk -type f -exec chmod 644 {} \;
 chmod 644 bootstrap.js
 
 echo -n "Repackaging..."
-zip -r tagit . -x *.git* > /dev/null
+zip -r turtl . -x *.git* > /dev/null
 echo "done."
 
-mv tagit.zip $EXTDIR/$XPI
+mv turtl.zip $EXTDIR/$XPI
 popd > /dev/null
 
 echo "Clearing tmp dir ($TMP/)"

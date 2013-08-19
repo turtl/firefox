@@ -4,7 +4,7 @@
   <head>
     <meta http-equiv="Content-Type" content="test/html; charset=utf-8">
     <meta http-equiv="Content-Language" content="en">
-    <title>tag.it
+    <title>Turtl
     </title>
     <link rel="stylesheet" href="app/css/reset.css">
     <link rel="stylesheet" href="app/css/template.css">
@@ -58,8 +58,8 @@
 <script src="app/library/tips.js"></script>
 <script src="bookmark.js"></script>
 
-<script src="app/tagit/api.js"></script>
-<script src="app/tagit/sync.js"></script>
+<script src="app/turtl/api.js"></script>
+<script src="app/turtl/sync.js"></script>
 
 <script src="app/handlers/bookmark.js"></script>
 <script src="app/handlers/dashboard.js"></script>
@@ -75,7 +75,7 @@
 <script src="app/controllers/bookmark.js"></script>
 <script src="app/controllers/categories.js"></script>
 <script src="app/controllers/dashboard.js"></script>
-<script src="app/controllers/invites/email.js"></script>
+<script src="app/controllers/invites/board.js"></script>
 <script src="app/controllers/notes/edit.js"></script>
 <script src="app/controllers/notes/edit_tags.js"></script>
 <script src="app/controllers/notes/index.js"></script>
@@ -242,7 +242,7 @@ var action	=	(board.id ? 'Edit' : 'Add');
 	</div>
 
 	<div class="personas-list">
-		<? if(personas.length > 0) { ?>
+		<? if(personas.length > 0 || invites.length > 0) { ?>
 			<ul>
 				<? personas.each(function(p) { ?>
 					<li class="persona_<?=p.id?> clear">
@@ -258,6 +258,25 @@ var action	=	(board.id ? 'Edit' : 'Add');
 						<ul>
 							<li>
 								<a href="#remove" title="Remove this user from sharing">
+									<img src="<?=img('/images/site/icons/remove_16x16_black.png')?>" width="16" height="16" alt="remove">
+								</a>
+							</li>
+						</ul>
+					</li>
+				<? }); ?>
+
+				<? invites.each(function(i) { ?>
+					<li class="invite_<?=i.id?> clear">
+						<h3>
+							<?=i.email?>
+							<small>- invite pending</small>
+						</h3>
+						<small>
+							(has <?=(i.p == 2 ? 'write' : 'read')?> permissions)
+						</small>
+						<ul>
+							<li>
+								<a href="#cancel" title="Cancel this invite">
 									<img src="<?=img('/images/site/icons/remove_16x16_black.png')?>" width="16" height="16" alt="remove">
 								</a>
 							</li>
@@ -307,9 +326,9 @@ var action	=	(board.id ? 'Edit' : 'Add');
 	</div>
 </div>
 </script>
-<script type="text/x-lb-tpl" name="invites/email">
+<script type="text/x-lb-tpl" name="invites/board">
 <div class="invite">
-	<h2>Invite <?=invite.email?> to Tagit</h2>
+	<h2>Invite <?=invite.email?> to Turtl</h2>
 	<form class="standard-form">
 		<div class="split clear">
 			<input type="text" name="secret" value="" tabindex="1" placeholder="Share Secret (optional)">
@@ -347,7 +366,7 @@ var action	=	(board.id ? 'Edit' : 'Add');
 			*/?>
 			<li class="bookmarklet">
 				<? var site_url = __site_url; ?>
-				<a href="javascript:(function() { var u = encodeURIComponent(window.location.href); var t = encodeURIComponent(document.title); var m = document.getElementsByTagName('meta'); var y = 'link'; var d = ''; var i = false; for(var x in m) {if(m[x].name == 'description') {d = m[x].content; break;}} for(var x in m) { if(m[x].getAttribute && m[x].getAttribute('property') == 'og:image') { i = m[x].content; break; } } if(i) d = '![image]('+i+')  \n'+d; d = encodeURIComponent(d); var req = new XMLHttpRequest(); req.open('GET', document.location, false); req.send(null); var headers = req.getAllResponseHeaders().toLowerCase(); var content = headers.match(new RegExp('content-type: image/([\\w]+)')); if(content && content[1]) { y = 'image'; t = ''; } f = '<?=window.location.protocol?>//<?=window.location.host?>/bookmark?url='+ u +'&title='+ t +'&text='+ d +'&type='+ y; t = function() { if(!window.open(f, 'tagit', 'location=yes,links=no,scrollbars=no,toolbar=no,width=740,height=525')) { location.href = f; } }; if(/Firefox/.test(navigator.userAgent)) setTimeout(t, 0); else t(); })()" title="Drag me to your bookmarks!">
+				<a href="javascript:(function() { var u = encodeURIComponent(window.location.href); var t = encodeURIComponent(document.title); var m = document.getElementsByTagName('meta'); var y = 'link'; var d = ''; var i = false; for(var x in m) {if(m[x].name == 'description') {d = m[x].content; break;}} for(var x in m) { if(m[x].getAttribute && m[x].getAttribute('property') == 'og:image') { i = m[x].content; break; } } if(i) d = '![image]('+i+')  \n'+d; d = encodeURIComponent(d); var req = new XMLHttpRequest(); req.open('GET', document.location, false); req.send(null); var headers = req.getAllResponseHeaders().toLowerCase(); var content = headers.match(new RegExp('content-type: image/([\\w]+)')); if(content && content[1]) { y = 'image'; t = ''; } f = '<?=window.location.protocol?>//<?=window.location.host?>/bookmark?url='+ u +'&title='+ t +'&text='+ d +'&type='+ y; t = function() { if(!window.open(f, 'turtl', 'location=yes,links=no,scrollbars=no,toolbar=no,width=740,height=525')) { location.href = f; } }; if(/Firefox/.test(navigator.userAgent)) setTimeout(t, 0); else t(); })()" title="Drag me to your bookmarks!">
 					<img src="<?=img('/images/site/icons/link_16x16.png')?>" width="16" height="16" alt="Bookmarklet">
 					<span>Bookmarklet</span>
 				</a>

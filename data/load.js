@@ -1,4 +1,4 @@
-if(unsafeWindow.tagit)
+if(unsafeWindow.turtl)
 {
 	self.port.on('do_load', function(auth, profile_data, base) {
 		unsafeWindow._in_ext	=	true;
@@ -7,7 +7,7 @@ if(unsafeWindow.tagit)
 		unsafeWindow._profile	=	profile_data;
 
 		// disable sync because we'll be sending in updates via the data_handler
-		unsafeWindow.tagit.sync	=	false;
+		unsafeWindow.turtl.sync	=	false;
 	});
 
 	// create a port/event adaptor (Firefox-specific) for the app

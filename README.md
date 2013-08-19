@@ -5,4 +5,4 @@ otherwise.
 
 Setup
 -----
-Create a symlink from `data/app/` -> `/path/to/tagit-js`.
+Create a symlink from `data/app/` -> `/path/to/turtl-js`.
