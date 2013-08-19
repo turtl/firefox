@@ -52,7 +52,8 @@ echo "  - symlinking app subfolder"
 ln -s $APPDIR resources/tagit/data/app
 
 echo "  - setting applicable permissions"
-chmod 644 -R resources/addon-sdk
+find resources/addon-sdk -type d -exec chmod 755 {} \;
+find resources/addon-sdk -type f -exec chmod 644 {} \;
 chmod 644 bootstrap.js
 
 echo -n "Repackaging..."
