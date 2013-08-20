@@ -84,6 +84,11 @@ var InvitesController	=	Composer.Controller.extend({
 		return li.className.replace(/^.*invite_([0-9a-f-]+).*?$/, '$1');
 	},
 
+	key_valid: function(key)
+	{
+		return key.match(/^(?:[A-Za-z0-9+\/]{4})*(?:[A-Za-z0-9+\/]{2}==|[A-Za-z0-9+\/]{3}=)?$/);
+	},
+
 	accept_invite: function(e)
 	{
 		if(!e) return;
@@ -92,7 +97,11 @@ var InvitesController	=	Composer.Controller.extend({
 		var invite_id	=	this.get_invite_id_from_el(e.target);
 		var invite		=	this.collection.find_by_id(invite_id);
 		if(!invite) return;
-		addon.port.emit('accept', invite_id);
+
+		var board_key	=	invite.decrypt_key(invite.get('data').board_key, invite.get('data').key, '');
+		if(!board_key || !this.key_valid(board_key)) return false;
+
+		addon.port.emit('accept', invite_id, board_key);
 	},
 
 	deny_invite: function(e)
@@ -129,11 +138,10 @@ var InvitesController	=	Composer.Controller.extend({
 		var invite		=	this.collection.find_by_id(invite_id);
 		if(!invite) return false;
 
-		console.log('board_key: ', invite.get('data').board_key);
-		console.log('pass: ', invite.get('data').key);
-		console.log('secret: ', secret);
-		var key			=	invite.decrypt_key(invite.get('data').board_key, invite.get('data').key, secret);
-		console.log('key? ', key);
+		var board_key	=	invite.decrypt_key(invite.get('data').board_key, invite.get('data').key, secret);
+		if(!board_key || !this.key_valid(board_key)) return false;
+
+		addon.port.emit('accept', invite_id, board_key);
 	}
 });
 
@@ -164,3 +172,4 @@ addon.port.on('populate-invites', function(invite_data) {
 	if(!loaded) load_actions.push(do_update);
 	else do_update();
 });
+
