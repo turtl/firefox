@@ -1,0 +1,12 @@
+div.invites {padding: 4px 4px 0 4px; background: #eee;}
+div.invites ul {list-style: none; margin: 0; padding: 0;}
+div.invites ul li {margin: 0 0 3px 0; padding: 3px; border-bottom: 1px solid #d7d7d7;}
+div.invites ul li:hover {background: #f5f5f5;}
+div.invites ul li.none:hover {background: none;}
+div.invites ul li:last-child {border-bottom: 0;}
+div.invites ul li .actions {float: right;}
+div.invites ul li .actions a {margin: 0 0 0 4px;}
+div.invites ul li form.secret {display: none; margin: 3px 3px 0 0;}
+div.invites ul li form.secret input[type="text"] {display: inline-block; width: 70%; margin: 0 6px 0 0;}
+div.invites ul li form.secret input[type="submit"] {}
+

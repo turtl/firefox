@@ -1,4 +1,13 @@
 body {font-family: arial; font-size: 13px;}
+
+.clearMe {display: block; height: 0; clear: both; font-size: 0;}
+.clear:after {content: "."; display: block; height: 0; clear: both; visibility: hidden;}
+.clear {display: inline-block;}
+/* hide IE mac \*/
+* html .clear {height: 1%;}
+.clear {display: block;}
+/* */
+
 h1 {margin: 0 0 12px 0; padding: 0; font-family: arial; font-size: 20px; color: #666;}
 img.load {visibility: hidden;}
 form input[type=password],
