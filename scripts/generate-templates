@@ -57,17 +57,19 @@ path_to_js "app/models"
 ## -----------------------------------------------------------------------------
 ## generate templates
 ## -----------------------------------------------------------------------------
-views=""
+views="var _templates = {};"
 viewfiles="`find app/views -name '*.html' | sort | sed 's| |___|g'`"
 for viewfile in $viewfiles; do
-	content="`cat $viewfile \
+	content=$( cat $viewfile \
+		| awk '{ prev_line = line; line = $0; } NR > 1 { print prev_line; } END { ORS = ""; print line; }' \
 		| sed 's|</script>|</%script%>|g' \
-		| sed 's|<script|<%script%|g'`"
+		| sed 's|<script|<%script%|g' \
+		| sed "s|'|\\\'|g" \
+		| sed 's|\\|\\\\|g' \
+		| tr -d '\r' \
+		| sed ':a;N;$!ba;s/\n/\\\n/g' )
 	name="`echo $viewfile | sed 's|app/views/||' | sed 's|\.html||' `"
-	views="${views}"'\n'
-	views="${views}<script type=\"text/x-lb-tpl\" name=\"${name}\">"'\n'
-	views="${views}${content}"'\n'
-	views="${views}</script>"
+	views="${views}"'\n\n'"_templates['${name}'] = '${content}"'\\\n'"';"
 done
 
 ## -----------------------------------------------------------------------------
@@ -84,13 +86,9 @@ index="`cat index.html.tpl`"
 index="`echo \"$index\" | sed \"s|{{gencss}}|$(replace "$css")|g\"`"
 index="`echo \"$index\" | sed \"s|{{genjs}}|$(replace "$js")|g\"`"
 
-# split file on genviews (can't use abot process because of sed errors)
-index1=${index%\{\{genviews\}\}*}
-index2=${index#*\{\{genviews\}\}}
-index="${index1}${views}${index2}"
-
+# send our generated data into their restecpive files
 echo -ne "$index" > index.html
-
+echo -e "$views" > templates.js
 
 ## -----------------------------------------------------------------------------
 ## generate bookmark.html
@@ -98,7 +96,7 @@ echo -ne "$index" > index.html
 # copy index.html to bookmark.html, replacing app/turtl.js with bookmark.js
 cat index.html | sed 's|app/turtl\.js|bookmark.js|' > bookmark.html
 # get rid of the index.html body
-perl -pi -e 'BEGIN{undef $/;} s|<body.*?<script type="text/x-lb-tpl"|<body><h1>Stand by...</h1>\n\n<script type="text/x-lb-tpl"|smg' bookmark.html
+perl -pi -e 'BEGIN{undef $/;} s|<body.*?</body>|<body><h1>Stand by...</h1></body>|smg' bookmark.html
 rm -f bookmark.html.bak
 
 # restore dir

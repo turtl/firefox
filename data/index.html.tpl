@@ -22,6 +22,7 @@
 	<script src="app/config/auth.js"></script>
 	<script src="app/config/routes.js"></script>
 {{genjs}}
+	<script src="templates.js"></script>
   </head>
   <body class="initial">
     <div id="loading-overlay">
@@ -55,7 +56,6 @@
         </div>
       </footer>
     </div>
-{{genviews}}
   </body>
 </html>
 
