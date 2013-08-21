@@ -233,6 +233,33 @@ _templates['invites/board'] = '<div class="invite">\
 </div>\
 ';
 
+_templates['invites/list'] = '<? if(invites.length > 0) { ?>\
+	<? invites.each(function(inv) { ?>\
+		<li class="invite_<?=inv.id?> clear">\
+			<div class="actions">\
+				<? if(inv.data.used_secret) { ?>\
+					<a href="#unlock" title="Unlock invite"><img src="app/images/site/icons/lock_16x16_blank.png" width="16" height="16" alt="Unlock"></a>\
+				<? } else { ?>\
+					<a href="#accept" title="Accept invite"><img src="app/images/site/icons/check_16x16.png" width="16" height="16" alt="Accept"></a>;\
+				<? } ?>\
+				<a href="#deny" title="Deny invite"><img src="app/images/site/icons/x_16x16.png" width="16" height="16" alt="Deny"></a>\
+			</div>\
+			<?=(inv.type != \'b\' ? \'Other\' : \'Board\')?> invite\
+			<strong><?=inv.code?></strong>\
+			<? if(inv.data.used_secret) { ?>\
+				&nbsp;&nbsp;(locked invite, <a href="#unlock">enter secret to unlock</a>)\
+				<form class="secret">\
+					<input type="text" name="secret" placeholder="Enter this invite\'s shared secret to unlock and accept">\
+					<input type="submit" value="Unlock">\
+				</form>\
+			<? } ?>\
+		</li>\
+	<? }); ?>\
+<? } else { ?>\
+	<li class="none">You have no pending invites.</li>\
+<? } ?>\
+';
+
 _templates['modules/header_bar'] = '<div class="actions">\
 	<? if(user.id) { ?>\
 		<div class="apps clear"></div>\
