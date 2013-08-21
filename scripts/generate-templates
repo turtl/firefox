@@ -15,7 +15,7 @@ cssfiles="`find app/css -name '*.css' \
 	| sort \
 	| grep -v 'template.css' \
 	| grep -v 'reset.css' \
-	| grep -v 'general.css' `"
+	| grep -v 'general.css' `"" background.css"
 for cssfile in $cssfiles; do
 	css="$css"'\n'"<link rel=\"stylesheet\" href=\"$cssfile\">"
 done
@@ -97,8 +97,20 @@ echo -e "$views" > templates.js
 # copy index.html to background.html, replacing app/turtl.js with background.js
 cat index.html \
 	| sed 's|\(<script src="app/turtl.js"></script>\)|\1\n<script src="background.js"></script>|' \
-	| sed 's|<body class="[^"]\+">|<body class="bare">|' \
 	> background.html
+
+# create a basic modal/bare html structure
+perl -pi -e 'BEGIN{undef $/;} s|<body.*?</body>|\
+<body class="bare">\
+	<div id="wrap-modal">\
+		<div id="wrap">\
+			<div id="main" class="maincontent">\
+				<div id="background_content" class="modalcontent clear"></div>\
+			</div>\
+		</div>\
+	</div>\
+</body>|smg' background.html
+rm -f background.html.bak
 
 # restore dir
 popd > /dev/null

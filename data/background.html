@@ -24,6 +24,7 @@
 <link rel="stylesheet" href="app/css/site/personas.css">
 <link rel="stylesheet" href="app/css/site/tags.css">
 <link rel="stylesheet" href="app/css/site/users.css">
+<link rel="stylesheet" href="background.css">
     <link rel="shortcut icon" href="app/favicon.png" type="image/png">
     <script src="app/library/mootools-core-1.4.5.js"></script>
     <script src="app/library/mootools-more-1.4.0.1.js"></script>
@@ -109,37 +110,14 @@
 <script src="app/models/user.js"></script>
 	<script src="templates.js"></script>
   </head>
-  <body class="bare">
-    <div id="loading-overlay">
-      <div>
-        <span>Initializing
-        </span>
-        <span class="spin">/
-        </span>
-      </div>
-    </div>
-    <div id="wrap-modal">
-      <div id="wrap">
-        <div class="sidebar-bg"></div>
-        <header class="clear">
-          <h1>
-            <a href="/">Turtl<span>.</span>
-            </a>
-          </h1>
-          <div class="loading">
-            <img src="images/site/icons/load_42x11.gif">
-          </div>
-        </header>
-        <div id="main" class="maincontent"></div>
-      </div>
-    </div>
-    <div id="footer">
-      <footer>
-        <div class="gutter">Copyright &copy; 2013 
-          <a href="http://www.lyonbros.com" target="_blank">Lyon Bros. Enterprises, LLC.
-          </a>&amp; Drew
-        </div>
-      </footer>
-    </div>
-  </body>
+  
+<body class="bare">
+	<div id="wrap-modal">
+		<div id="wrap">
+			<div id="main" class="maincontent">
+				<div id="background_content" class="modalcontent clear"></div>
+			</div>
+		</div>
+	</div>
+</body>
 </html>

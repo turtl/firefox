@@ -240,7 +240,7 @@ _templates['invites/list'] = '<? if(invites.length > 0) { ?>\
 				<? if(inv.data.used_secret) { ?>\
 					<a href="#unlock" title="Unlock invite"><img src="<?=img(\'\/images\/site\/icons\/lock_16x16_blank.png\')?>" width="16" height="16" alt="Unlock"><\/a>\
 				<? } else { ?>\
-					<a href="#accept" title="Accept invite"><img src="<?=img(\'\/images\/site\/icons\/check_16x16.png\')?>" width="16" height="16" alt="Accept"><\/a>;\
+					<a href="#accept" title="Accept invite"><img src="<?=img(\'\/images\/site\/icons\/check_16x16.png\')?>" width="16" height="16" alt="Accept"><\/a>\
 				<? } ?>\
 				<a href="#deny" title="Deny invite"><img src="<?=img(\'\/images\/site\/icons\/x_16x16.png\')?>" width="16" height="16" alt="Deny"><\/a>\
 			<\/div>\
@@ -265,48 +265,40 @@ _templates['modules/header_bar'] = '<div class="actions">\
 		<div class="apps clear"><\/div>\
 	<? } ?>\
 \
-	<? if(user.id) { ?>\
-		<a class="menu" href="#menu"><img src="<?=img(\'\/images\/site\/icons\/menu_37x29.png\')?>" width="37" height="29" alt="Menu"><\/a>\
-		<ul class="menu">\
-			<li class="persona">\
-				<a href="#personas" title="Manage your identity">\
-					<img src="<?=img(\'\/images\/site\/icons\/person_16x16.png\')?>" width="16" height="16" alt="Persona">\
-					<span>Personas<\/span>\
-				<\/a>\
-			<\/li>\
-			<?\/*\
-			<li class="sync">\
-				<a href="#sync" title="Sync your profile with the server">\
-					<img src="<?=img(\'\/images\/site\/icons\/sync_16x16.png\')?>" width="16" height="16" alt="Sync">\
-					<span>Sync profile<\/span>\
-				<\/a>\
-			<\/li>\
-			*\/?>\
-			<li class="bookmarklet">\
-				<? var site_url = __site_url; ?>\
-				<a href="javascript:(function() { var u = encodeURIComponent(window.location.href); var t = encodeURIComponent(document.title); var m = document.getElementsByTagName(\'meta\'); var y = \'link\'; var d = \'\'; var i = false; for(var x in m) {if(m[x].name == \'description\') {d = m[x].content; break;}} for(var x in m) { if(m[x].getAttribute && m[x].getAttribute(\'property\') == \'og:image\') { i = m[x].content; break; } } if(i) d = \'![image](\'+i+\')  \\n\'+d; d = encodeURIComponent(d); var req = new XMLHttpRequest(); req.open(\'GET\', document.location, false); req.send(null); var headers = req.getAllResponseHeaders().toLowerCase(); var content = headers.match(new RegExp(\'content-type: image\/([\\\\w]+)\')); if(content && content[1]) { y = \'image\'; t = \'\'; } f = \'<?=window.location.protocol?>\/\/<?=window.location.host?>\/bookmark?url=\'+ u +\'&title=\'+ t +\'&text=\'+ d +\'&type=\'+ y; t = function() { if(!window.open(f, \'turtl\', \'location=yes,links=no,scrollbars=no,toolbar=no,width=740,height=525\')) { location.href = f; } }; if(\/Firefox\/.test(navigator.userAgent)) setTimeout(t, 0); else t(); })()" title="Drag me to your bookmarks!">\
-					<img src="<?=img(\'\/images\/site\/icons\/link_16x16.png\')?>" width="16" height="16" alt="Bookmarklet">\
-					<span>Bookmarklet<\/span>\
-				<\/a>\
-			<\/li>\
-			<? if(!window._in_ext) { ?>\
+	<? if(!window._in_ext) { ?>\
+		<? if(user.id) { ?>\
+			<a class="menu" href="#menu"><img src="<?=img(\'\/images\/site\/icons\/menu_37x29.png\')?>" width="37" height="29" alt="Menu"><\/a>\
+			<ul class="menu">\
+				<li class="persona">\
+					<a href="#personas" title="Manage your identity">\
+						<img src="<?=img(\'\/images\/site\/icons\/person_16x16.png\')?>" width="16" height="16" alt="Persona">\
+						<span>Personas<\/span>\
+					<\/a>\
+				<\/li>\
+				<li class="bookmarklet">\
+					<? var site_url = __site_url; ?>\
+					<a href="javascript:(function() { var u = encodeURIComponent(window.location.href); var t = encodeURIComponent(document.title); var m = document.getElementsByTagName(\'meta\'); var y = \'link\'; var d = \'\'; var i = false; for(var x in m) {if(m[x].name == \'description\') {d = m[x].content; break;}} for(var x in m) { if(m[x].getAttribute && m[x].getAttribute(\'property\') == \'og:image\') { i = m[x].content; break; } } if(i) d = \'![image](\'+i+\')  \\n\'+d; d = encodeURIComponent(d); var req = new XMLHttpRequest(); req.open(\'GET\', document.location, false); req.send(null); var headers = req.getAllResponseHeaders().toLowerCase(); var content = headers.match(new RegExp(\'content-type: image\/([\\\\w]+)\')); if(content && content[1]) { y = \'image\'; t = \'\'; } f = \'<?=window.location.protocol?>\/\/<?=window.location.host?>\/bookmark?url=\'+ u +\'&title=\'+ t +\'&text=\'+ d +\'&type=\'+ y; t = function() { if(!window.open(f, \'turtl\', \'location=yes,links=no,scrollbars=no,toolbar=no,width=740,height=525\')) { location.href = f; } }; if(\/Firefox\/.test(navigator.userAgent)) setTimeout(t, 0); else t(); })()" title="Drag me to your bookmarks!">\
+						<img src="<?=img(\'\/images\/site\/icons\/link_16x16.png\')?>" width="16" height="16" alt="Bookmarklet">\
+						<span>Bookmarklet<\/span>\
+					<\/a>\
+				<\/li>\
 				<li class="logout">\
 					<a href="\/users\/logout" title="Sign out (shortcut `shift+L`)">\
 						<img src="<?=img(\'\/images\/site\/icons\/logout_16x16.png\')?>" width="16" height="16" alt="Logout">\
 						<span>Logout<\/span>\
 					<\/a>\
 				<\/li>\
-			<? } ?>\
-		<\/ul>\
-	<? } else { ?>\
-		<ul>\
-			<li>\
-				<a href="\/users\/login"><span>Login<\/span><\/a>\
-			<\/li>\
-			<li>\
-				<a href="\/users\/join"><span>Join<\/span><\/a>\
-			<\/li>\
-		<\/ul>\
+			<\/ul>\
+		<? } else { ?>\
+			<ul>\
+				<li>\
+					<a href="\/users\/login"><span>Login<\/span><\/a>\
+				<\/li>\
+				<li>\
+					<a href="\/users\/join"><span>Join<\/span><\/a>\
+				<\/li>\
+			<\/ul>\
+		<? } ?>\
 	<? } ?>\
 <\/div>\
 ';
@@ -617,11 +609,11 @@ var action = persona.id ? \'Edit\' : \'Add\';\
 	<?=action?> persona\
 	<small><a href="#personas">&laquo; Back to <? if(return_to_manage) { ?>board management<? } else { ?>your personas<? } ?><\/a><\/small>\
 <\/h1>\
-<div class="persona-edit">\
+<div class="persona-edit clear">\
 	<form class="standard-form">\
 		<input tabindex="1" type="text" name="email" value="<?=persona.email?>" maxlength="24" placeholder="Your email address">\
 		<img class="load" src="<?=img(\'\/images\/site\/icons\/load_16x16.gif\')?>" width="16" height="16" alt="WORKING!!!1">\
-		<p class="taken">(type your email above to see if it\'s available)<\/p>\
+		<!--<p class="taken">(type your email above to see if it\'s available)<\/p>-->\
 \
 		<input tabindex="2" type="text" name="name" value="<?=persona.name?>" placeholder="Full name (optional)">\
 \
