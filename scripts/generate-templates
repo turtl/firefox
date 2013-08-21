@@ -66,6 +66,7 @@ for viewfile in $viewfiles; do
 		| sed 's|<script|<%script%|g' \
 		| sed "s|'|\\\'|g" \
 		| sed 's|\\|\\\\|g' \
+		| sed 's|\/|\\/|g' \
 		| tr -d '\r' \
 		| sed ':a;N;$!ba;s/\n/\\\n/g' )
 	name="`echo $viewfile | sed 's|app/views/||' | sed 's|\.html||' `"
@@ -91,13 +92,13 @@ echo -ne "$index" > index.html
 echo -e "$views" > templates.js
 
 ## -----------------------------------------------------------------------------
-## generate bookmark.html
+## generate background.html
 ## -----------------------------------------------------------------------------
-# copy index.html to bookmark.html, replacing app/turtl.js with bookmark.js
-cat index.html | sed 's|app/turtl\.js|bookmark.js|' > bookmark.html
-# get rid of the index.html body
-perl -pi -e 'BEGIN{undef $/;} s|<body.*?</body>|<body><h1>Stand by...</h1></body>|smg' bookmark.html
-rm -f bookmark.html.bak
+# copy index.html to background.html, replacing app/turtl.js with background.js
+cat index.html \
+	| sed 's|\(<script src="app/turtl.js"></script>\)|\1\n<script src="background.js"></script>|' \
+	| sed 's|<body class="[^"]\+">|<body class="bare">|' \
+	> background.html
 
 # restore dir
 popd > /dev/null
