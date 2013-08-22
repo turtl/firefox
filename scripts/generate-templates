@@ -64,13 +64,12 @@ for viewfile in $viewfiles; do
 		| awk '{ prev_line = line; line = $0; } NR > 1 { print prev_line; } END { ORS = ""; print line; }' \
 		| sed 's|</script>|</%script%>|g' \
 		| sed 's|<script|<%script%|g' \
-		| sed "s|'|\\\'|g" \
 		| sed 's|\\|\\\\|g' \
-		| sed 's|\/|\\/|g' \
+		| sed "s|'|\\\'|g" \
 		| tr -d '\r' \
 		| sed ':a;N;$!ba;s/\n/\\\n/g' )
 	name="`echo $viewfile | sed 's|app/views/||' | sed 's|\.html||' `"
-	views="${views}"'\n\n'"_templates['${name}'] = '${content}"'\\\n'"';"
+	views="${views}"'\n\n'"_templates['${name}'] = '${content}"'\\n'"';"
 done
 
 ## -----------------------------------------------------------------------------
@@ -89,7 +88,12 @@ index="`echo \"$index\" | sed \"s|{{genjs}}|$(replace "$js")|g\"`"
 
 # send our generated data into their restecpive files
 echo -ne "$index" > index.html
-echo -e "$views" > templates.js
+# yuck. newline madness...
+echo "$views" \
+	| sed 's|\\\\\\n|____{NEWLINE}____|g' \
+	| sed 's|\\n|\n|g' \
+	| sed 's|____{NEWLINE}____|\\\\\\n|g' \
+	> templates.js \
 
 ## -----------------------------------------------------------------------------
 ## generate background.html
