@@ -1,1 +1,2 @@
 #background_content {padding: 16px;}
+#background_content > .closelink {position: absolute; top: 0px; right: 0px; display: block; width: 26px; height: 26px; margin: 0; padding: 0; background: url(app/images/site/modal/close_filled.png) center center no-repeat;}
