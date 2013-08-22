@@ -46,7 +46,7 @@ echo "done."
 
 echo "  - copying live config over local"
 cp $EXTDIR/lib/config.live.js resources/turtl/lib/config.js
-rm -f resources/turtl/data/app
+rm -rf resources/turtl/data/app
 
 echo "  - symlinking app subfolder"
 ln -s $APPDIR resources/turtl/data/app
