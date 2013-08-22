@@ -314,6 +314,7 @@ function createMenu(input, popup, buttonID) {
 			}
 			if (mitem.id) tbmi.setAttribute("id", mitem.id);
 			if (mitem.label) tbmi.setAttribute("label", mitem.label);
+			if (mitem.bold) tbmi.style.fontWeight = 'bold';
 			if (mitem.image) {
 				tbmi.setAttribute("class", "menuitem-iconic");
 				tbmi.setAttribute("image", mitem.image);
