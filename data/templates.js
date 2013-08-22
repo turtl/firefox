@@ -233,30 +233,44 @@ _templates['invites/board'] = '<div class="invite">\
 <\/div>\
 ';
 
-_templates['invites/list'] = '<? if(invites.length > 0) { ?>\
-	<? invites.each(function(inv) { ?>\
-		<li class="invite_<?=inv.id?> clear">\
-			<div class="actions">\
-				<? if(inv.data.used_secret) { ?>\
-					<a href="#unlock" title="Unlock invite"><img src="<?=img(\'\/images\/site\/icons\/lock_16x16_blank.png\')?>" width="16" height="16" alt="Unlock"><\/a>\
-				<? } else { ?>\
-					<a href="#accept" title="Accept invite"><img src="<?=img(\'\/images\/site\/icons\/check_16x16.png\')?>" width="16" height="16" alt="Accept"><\/a>\
-				<? } ?>\
-				<a href="#deny" title="Deny invite"><img src="<?=img(\'\/images\/site\/icons\/x_16x16.png\')?>" width="16" height="16" alt="Deny"><\/a>\
-			<\/div>\
-			<?=(inv.type != \'b\' ? \'Other\' : \'Board\')?> invite\
-			<strong><?=inv.code?><\/strong>\
-			<? if(inv.data.used_secret) { ?>\
-				&nbsp;&nbsp;(locked invite, <a href="#unlock">enter secret to unlock<\/a>)\
-				<form class="secret">\
-					<input type="text" name="secret" placeholder="Enter this invite\'s shared secret to unlock and accept">\
-					<input type="submit" value="Unlock">\
-				<\/form>\
-			<? } ?>\
-		<\/li>\
-	<? }); ?>\
+_templates['invites/list'] = '<h1>Invites<\/h1>\
+\
+<? if(num_personas > 0) { ?>\
+	<div class="invites-list">\
+		<? if(invites.length > 0) { ?>\
+			<ul>\
+				<? invites.each(function(inv) { ?>\
+					<? inv.data || (inv.data = {}); ?>\
+					<li class="invite_<?=inv.id?> clear">\
+						<div class="actions">\
+							<? if(inv.data.used_secret) { ?>\
+								<a href="#unlock" title="Unlock invite"><img src="<?=img(\'\/images\/site\/icons\/lock_16x16_blank.png\')?>" width="16" height="16" alt="Unlock"><\/a>\
+							<? } else { ?>\
+								<a href="#accept" title="Accept invite"><img src="<?=img(\'\/images\/site\/icons\/check_16x16.png\')?>" width="16" height="16" alt="Accept"><\/a>\
+							<? } ?>\
+							<a href="#deny" title="Deny invite"><img src="<?=img(\'\/images\/site\/icons\/x_16x16.png\')?>" width="16" height="16" alt="Deny"><\/a>\
+						<\/div>\
+						<?=(inv.type != \'b\' ? \'Other\' : \'Board\')?> invite\
+						<strong><?=inv.code?><\/strong>\
+						<? if(inv.data.used_secret) { ?>\
+							&nbsp;&nbsp;(locked invite, <a href="#unlock">enter secret to unlock<\/a>)\
+							<form class="secret">\
+								<input type="text" name="secret" placeholder="Enter this invite\'s shared secret to unlock and accept">\
+								<input type="submit" value="Unlock">\
+							<\/form>\
+						<? } ?>\
+					<\/li>\
+				<? }); ?>\
+			<\/ul>\
+		<? } else { ?>\
+			<p>You have no pending invites.<p>\
+		<? } ?>\
+	<\/div>\
+\
 <? } else { ?>\
-	<li class="none">You have no pending invites.<\/li>\
+	<div class="button add persona"><span>Add a persona<\/span><\/div>\
+	<br><br>\
+	<p>You have <?=invites.length?> invite(s), but you cannot accept them without a persona.<\/p>\
 <? } ?>\
 ';
 
@@ -642,7 +656,7 @@ _templates['personas/index'] = '<h1>Your personas<\/h1>\
 <div class="personas">\
 	<div class="content">\
 		<p>\
-			Persona\'s let you give a "face" to your account. By default, your\
+			Personas let you give a "face" to your account. By default, your\
 			profile is private and your account is hidden. Persona\'s allow you to\
 			share your data (and be shared with).\
 		<\/p>\
