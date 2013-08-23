@@ -235,9 +235,9 @@ _templates['invites/board'] = '<div class="invite">\
 
 _templates['invites/list'] = '<h1>Invites</h1>\
 \
-<? if(num_personas > 0) { ?>\
-	<div class="invites-list">\
-		<? if(invites.length > 0) { ?>\
+<div class="invites-list">\
+	<? if(invites.length > 0) { ?>\
+		<? if(num_personas > 0) { ?>\
 			<ul>\
 				<? invites.each(function(inv) { ?>\
 					<? inv.data || (inv.data = {}); ?>\
@@ -263,15 +263,14 @@ _templates['invites/list'] = '<h1>Invites</h1>\
 				<? }); ?>\
 			</ul>\
 		<? } else { ?>\
-			<p>You have no pending invites.<p>\
+			<div class="button add persona"><span>Add a persona</span></div>\
+			<br><br>\
+			<p>You have <?=invites.length?> invite(s), but you cannot accept them without a persona.</p>\
 		<? } ?>\
-	</div>\
-\
-<? } else { ?>\
-	<div class="button add persona"><span>Add a persona</span></div>\
-	<br><br>\
-	<p>You have <?=invites.length?> invite(s), but you cannot accept them without a persona.</p>\
-<? } ?>\
+	<? } else { ?>\
+		<p>You have no pending invites.<p>\
+	<? } ?>\
+</div>\
 ';
 
 _templates['modules/header_bar'] = '<div class="actions">\
@@ -620,33 +619,34 @@ _templates['personas/edit'] = '<?\
 var action = persona.id ? \'Edit\' : \'Add\';\
 ?>\
 <h1>\
-	<?=action?> persona\
-	<small><a href="#personas">&laquo; Back to <? if(return_to_manage) { ?>board management<? } else { ?>your personas<? } ?></a></small>\
+	<!--<? if(was_join) { ?><em>Almost done: </em><? } ?>-->\
+	<?=action?> <? if(was_join) { ?>a <? } ?>persona\
+	<? if(was_join) { ?>\
+		<small>(personas let you to share with others)</small>\
+	<? } else { ?>\
+		<small><a href="#personas">&laquo; Back to <? if(return_to_manage) { ?>board management<? } else { ?>your personas<? } ?></a></small>\
+	<? } ?>\
 </h1>\
 <div class="persona-edit clear">\
 	<form class="standard-form">\
 		<input tabindex="1" type="text" name="email" value="<?=persona.email?>" maxlength="24" placeholder="Your email address">\
 		<img class="load" src="<?=img(\'/images/site/icons/load_16x16.gif\')?>" width="16" height="16" alt="WORKING!!!1">\
-		<!--<p class="taken">(type your email above to see if it\'s available)</p>-->\
+		<p class="taken">&nbsp;</p>\
 \
 		<input tabindex="2" type="text" name="name" value="<?=persona.name?>" placeholder="Full name (optional)">\
 \
 		<span class="clearMe"></span>\
 		<div class="submit">\
 			<input tabindex="4" type="submit" value="<?=action?> persona">\
+			<? if(was_join) { ?><a class="skip" href="#skip">Skip this step &raquo;</a><? } ?>\
 		</div>\
 	</form>\
 	<div class="info content">\
 		<p>\
-			Personas give your account a face. Because of this, <strong>your\
-			personas are public and stored in plaintext in the database</strong>,\
-			allowing other users to find you and share with you (and also\
-			allowing you to share with others). The only required information\
-			for a persona is the email, which must be unique.\
-		</p>\
-		<p>\
-			While personas themselves are public, <strong>the link between a\
-			persona and your account is hidden and encrypted</strong>.\
+			By default, your Turtl account is private. Personas change this by\
+			giving your account a face: a name and an email people can use to\
+			find you on Turtl and securely share with you.\
+			<a href="http://turtl.it/security#personas" target="_blank">Read more &raquo;</a>\
 		</p>\
 	</div>\
 </div>\
