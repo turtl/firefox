@@ -40,7 +40,7 @@ var submit_join	=	function(e)
 	var username	=	form.getElement('input[name=username]');
 	var password	=	form.getElement('input[name=password]');
 	var pconfirm	=	form.getElement('input[name=confirm]');
-	var email		=	form.getElement('input[name=email');
+	var email		=	form.getElement('input[name=email]');
 	var submit		=	form.getElement('input[type=submit]');
 
 	// error check
@@ -60,6 +60,12 @@ var submit_join	=	function(e)
 	{
 		note('No. Bad user. BAD. That is <em>not</em> an acceptable password.');
 		password.focus();
+		return false;
+	}
+	if(!email.get('value').match(/@/))
+	{
+		note('Invalid email.');
+		email.focus();
 		return false;
 	}
 
@@ -117,3 +123,19 @@ addon.port.on('join-fail', function(status, err) {
 	note(err);
 	this.submit.disabled	=	false;
 });
+
+
+addon.port.on('generate-rsa-keypair', function() {
+	tcrypt.generate_rsa_keypair({
+		success: function(pub, priv) {
+			addon.port.emit('rsa-keypair', {
+				public: tcrypt.rsa_key_to_string(pub),
+				private: tcrypt.rsa_key_to_string(priv)
+			});
+		},
+		error: function(err) {
+			addon.port.emit('rsa-keygen-error', err);
+		}
+	});
+});
+
