@@ -31,9 +31,10 @@
 		<script src="app/models/setting.js"></script>
 		<script src="app/models/user.js"></script>
 		<script src="login-join.js"></script>
+		<link rel="stylesheet" href="app/css/reset.css">
 		<link rel="stylesheet" href="app/css/modules/barfr.css">
-		<link rel="stylesheet" href="addon.css">
 		<link rel="stylesheet" href="background.css">
+		<link rel="stylesheet" href="addon.css">
 		<link rel="stylesheet" href="user.css">
 	</head>
 	<body>
@@ -61,18 +62,20 @@
 						<input tabindex="7" type="password" name="confirm" value="" placeholder="confirm password">
 					</div>
 					<input tabindex="8" type="text" name="email" value="" placeholder="email (required, not used for login)">
-					<p class="error">
-						You <em>must</em> <strong>remember your username/password</strong>.
-					</p>
-					<p>
-						Your password is used not only to log you in, but to decrypt all
-						of your data in Turtl. There is no password recovery feature
-						because we don't store your login information anywhere.
-					</p>
-					<p>
-						<em>Make sure you keep your password in a safe place!</em>
-						<a href="http://turtl.it/about" target="_blank">Read more.</a>
-					</p>
+					<div class="content">
+						<p class="error">
+							You <em>must</em> <strong>remember your username/password</strong>.
+						</p>
+						<p>
+							Your password is used not only to log you in, but to decrypt all
+							of your data in Turtl. There is no password recovery feature
+							because we don't store your login information anywhere.
+						</p>
+						<p>
+							<em>Make sure you keep your password in a safe place!</em>
+							<a href="http://turtl.it/about" target="_blank">Read more.</a>
+						</p>
+					</div>
 					<input tabindex="9" type="submit" value="Join">
 				</form>
 			</div>

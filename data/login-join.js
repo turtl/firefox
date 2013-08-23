@@ -40,6 +40,7 @@ var submit_join	=	function(e)
 	var username	=	form.getElement('input[name=username]');
 	var password	=	form.getElement('input[name=password]');
 	var pconfirm	=	form.getElement('input[name=confirm]');
+	var email		=	form.getElement('input[name=email');
 	var submit		=	form.getElement('input[type=submit]');
 
 	// error check

@@ -1,5 +1,6 @@
-.user-panel {width: 100%; margin: 0; padding: 6px 0; font-size: 13px;}
+.user-panel {width: 100%; margin: 0; padding: 16px 0; font-size: 13px;}
 .user-panel img.load {position: absolute; top: 4px; right: 4px;}
 .user-panel .login {float: left; width: 35%; padding: 0 0 0 1.4%;}
 .user-panel .join {float: right; width: 55%; padding: 0 2% 0 3%; border-left: 1px solid #ddd;}
+.user-panel .content {padding: 10px 0 0 0;}
 
