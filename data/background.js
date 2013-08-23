@@ -13,14 +13,6 @@ addon.port.on('init', function(auth, base) {
 		'overflow-y': 'visible'
 	});
 
-	// replace the barfr object. doesnt do us much good inside a panel
-	barfr	=	{
-		barf: function(msg) {
-			console.log('barfr: ', msg);
-			port.send('error', msg);
-		}
-	};
-
 	_base_url	=	base;
 
 	// enable sync
