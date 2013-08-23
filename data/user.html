@@ -30,7 +30,8 @@
 		<script src="app/models/persona.js"></script>
 		<script src="app/models/setting.js"></script>
 		<script src="app/models/user.js"></script>
-		<script src="login-join.js"></script>
+		<script src="rsa.js"></script>
+		<script src="user.js"></script>
 		<link rel="stylesheet" href="app/css/reset.css">
 		<link rel="stylesheet" href="app/css/modules/barfr.css">
 		<link rel="stylesheet" href="background.css">
@@ -61,11 +62,12 @@
 						<input tabindex="6" type="password" name="password" value="" placeholder="password">
 						<input tabindex="7" type="password" name="confirm" value="" placeholder="confirm password">
 					</div>
-					<input tabindex="8" type="text" name="email" value="" placeholder="email (required, not used for login)">
 					<div class="content">
 						<p>
 							<span class="error">You <em>must</em> <strong>remember
 							your username/password</strong>.</span>
+						</p>
+						<p>
 							Your password is used not only to log you in, but to decrypt all
 							of your data in Turtl. There is no password recovery feature
 							because we don't store your login information anywhere.
