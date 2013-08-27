@@ -136,10 +136,11 @@ _templates['boards/share'] = '<h1>\
 		<? if(personas.length > 0 || invites.length > 0) { ?>\
 			<ul>\
 				<? personas.each(function(p) { ?>\
+					<? if(!p || !p.privs || !p.privs.p) { return; } ?>\
 					<li class="persona_<?=p.id?> clear">\
 						<h3>\
 							<?=p.email?>\
-							<? if(p.privs.i) { ?>\
+							<? if(p.privs && p.privs.i) { ?>\
 								<small>- invite pending</small>\
 							<? } ?>\
 						</h3>\
@@ -450,6 +451,7 @@ _templates['notes/index'] = '<div class="note-actions">\
 		-->\
 	</ul>\
 	<input type="text" name="search" placeholder="Search board notes">\
+	<a href="#clear-filters" class="clear" title="Reset all search filters (shortcut `x`)">clear filters</a>\
 </div>\
 <ul class="clear note_list list_<?=display_type?>"></ul>\
 ';
