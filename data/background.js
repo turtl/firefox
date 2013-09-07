@@ -1,4 +1,6 @@
-var _in_ext		=	true;
+window.firefox			=	true;
+window._in_ext			=	true;
+window._in_background	=	true;
 var port		=	new FirefoxAddonPort(addon.port);
 var _base_url	=	false;
 

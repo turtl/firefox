@@ -136,16 +136,16 @@ _templates['boards/share'] = '<h1>\
 		<? if(personas.length > 0 || invites.length > 0) { ?>\
 			<ul>\
 				<? personas.each(function(p) { ?>\
-					<? if(!p || !p.privs || !p.privs.p) { return; } ?>\
+					<? if(!p || !p.privs || !p.privs.perms) { return; } ?>\
 					<li class="persona_<?=p.id?> clear">\
 						<h3>\
 							<?=p.email?>\
-							<? if(p.privs && p.privs.i) { ?>\
+							<? if(p.privs && p.privs.invite) { ?>\
 								<small>- invite pending</small>\
 							<? } ?>\
 						</h3>\
 						<small>\
-							(has <?=(p.privs.p == 2 ? \'write\' : \'read\')?> permissions)\
+							(has <?=(p.privs.perms == 2 ? \'write\' : \'read\')?> permissions)\
 						</small>\
 						<ul>\
 							<li>\
@@ -164,7 +164,7 @@ _templates['boards/share'] = '<h1>\
 							<small>- invite pending</small>\
 						</h3>\
 						<small>\
-							(has <?=(i.p == 2 ? \'write\' : \'read\')?> permissions)\
+							(has <?=(i.perms == 2 ? \'write\' : \'read\')?> permissions)\
 						</small>\
 						<ul>\
 							<li>\
@@ -223,7 +223,7 @@ _templates['invites/board'] = '<div class="invite">\
 	<h2>Invite <?=invite.email?> to Turtl</h2>\
 	<form class="standard-form">\
 		<div class="split clear">\
-			<input type="text" name="secret" value="" tabindex="1" placeholder="Share Secret (optional)">\
+			<input type="text" name="secret" value="" tabindex="1" placeholder="Shared secret (optional)">\
 			<p>\
 				A recommended passphrase that protects the board in the event\
 				the invite code is intercepted. It must be sent to the invitee\
@@ -237,12 +237,21 @@ _templates['invites/board'] = '<div class="invite">\
 _templates['invites/list'] = '<h1>Invites</h1>\
 \
 <div class="invites-list">\
-	<? if(invites.length > 0) { ?>\
+	<? if(invites.length > 0 || messages.length > 0) { ?>\
 		<? if(num_personas > 0) { ?>\
 			<ul>\
+				<? messages.each(function(msg) { ?>\
+					<li class="clear message <?=msg.body.type?> message_<?=msg.id?>">\
+						<div class="actions">\
+							<a href="#accept" title="Accept invite"><img src="<?=img(\'/images/site/icons/check_16x16.png\')?>" width="16" height="16" alt="Accept"></a>\
+							<a href="#deny" title="Deny invite"><img src="<?=img(\'/images/site/icons/x_16x16.png\')?>" width="16" height="16" alt="Deny"></a>\
+						</div>\
+						<?=msg.subject?>\
+					</li>\
+				<? }); ?>\
 				<? invites.each(function(inv) { ?>\
 					<? inv.data || (inv.data = {}); ?>\
-					<li class="invite_<?=inv.id?> clear">\
+					<li class="invite invite_<?=inv.id?> clear">\
 						<div class="actions">\
 							<? if(inv.data.used_secret) { ?>\
 								<a href="#unlock" title="Unlock invite"><img src="<?=img(\'/images/site/icons/lock_16x16_blank.png\')?>" width="16" height="16" alt="Unlock"></a>\
@@ -251,8 +260,14 @@ _templates['invites/list'] = '<h1>Invites</h1>\
 							<? } ?>\
 							<a href="#deny" title="Deny invite"><img src="<?=img(\'/images/site/icons/x_16x16.png\')?>" width="16" height="16" alt="Deny"></a>\
 						</div>\
-						<?=(inv.type != \'b\' ? \'Other\' : \'Board\')?> invite\
-						<strong><?=inv.code?></strong>\
+						<? if(inv.from) { ?>\
+							<strong><?=inv.from.email?></strong>\
+							invited you to join a \
+							<?=(inv.type != \'b\' ? \'other\' : \'board\')?>\
+						<? } else {  ?>\
+							<?=(inv.type != \'b\' ? \'Other\' : \'Board\')?> invite\
+							<strong><?=inv.code?></strong>\
+						<? } ?>\
 						<? if(inv.data.used_secret) { ?>\
 							&nbsp;&nbsp;(locked invite, <a href="#unlock">enter secret to unlock</a>)\
 							<form class="secret">\
@@ -450,8 +465,6 @@ _templates['notes/index'] = '<div class="note-actions">\
 		</li>\
 		-->\
 	</ul>\
-	<input type="text" name="search" placeholder="Search board notes">\
-	<a href="#clear-filters" class="clear" title="Reset all search filters (shortcut `x`)">clear filters</a>\
 </div>\
 <ul class="clear note_list list_<?=display_type?>"></ul>\
 ';
@@ -631,7 +644,7 @@ var action = persona.id ? \'Edit\' : \'Add\';\
 </h1>\
 <div class="persona-edit clear">\
 	<form class="standard-form">\
-		<input tabindex="1" type="text" name="email" value="<?=persona.email?>" maxlength="24" placeholder="Your email address">\
+		<input tabindex="1" type="text" name="email" value="<?=persona.email?>" placeholder="Your email address">\
 		<img class="load" src="<?=img(\'/images/site/icons/load_16x16.gif\')?>" width="16" height="16" alt="WORKING!!!1">\
 		<p class="taken">&nbsp;</p>\
 \
@@ -685,19 +698,52 @@ _templates['personas/list'] = '<? personas.each(function(p) { ?>\
 	<li class="persona_<?=p.id?> clear">\
 		<h3><?=p.email?></h3>\
 		<small><?=p.name?></small>\
+		<? if(p.has_key) { ?>\
+			<small class="success">(RSA 3072)</small>\
+		<? } else { ?>\
+			<small>(generating RSA key)</small>\
+		<? } ?>\
 		<? if(show_edit) { ?>\
 			<ul>\
 				<li>\
-					<a href="#edit">\
+					<a href="#email" title="Update this persona\'s email/notification settings">\
+						<img src="<?=img(\'/images/site/icons/email_16x16_black.png\')?>" width="16" height="16" alt="email">\
+					</a>\
+				</li>\
+				<li>\
+					<a href="#edit" title="Edit this persona">\
 						<img src="<?=img(\'/images/site/icons/edit_16x16_black.png\')?>" width="16" height="16" alt="edit">\
 					</a>\
 				</li>\
 				<li>\
-					<a href="#delete">\
+					<a href="#delete" title="Delete this persona permanently">\
 						<img src="<?=img(\'/images/site/icons/delete_16x16_black.png\')?>" width="16" height="16" alt="delete">\
 					</a>\
 				</li>\
 			</ul>\
+			<div class="email-settings">\
+				<? var settings = p.settings || {}; ?>\
+				<h4>Email settings</h4>\
+				<table>\
+					<tr>\
+						<?\
+						var email_invite	=	true;\
+						var label_id		=	\'email_\'+p.id;\
+						var name			=	\'notify_invite\';\
+						if(typeof settings[name] != \'undefined\' && settings[name] === 0)\
+						{\
+							email_invite	=	false;\
+						}\
+						?>\
+						<td>\
+							<label for="<?=label_id?>">Notify me when I get a board invitation</label>\
+						</td>\
+						<td>\
+							<input id="<?=label_id?>" type="checkbox" name="<?=name?>" value="1" <? if(email_invite) { ?>checked<? } ?>>\
+						</td>\
+					</tr>\
+				</table>\
+			</div>\
 		<? } ?>\
 	</li>\
 <? }); ?>\
@@ -735,6 +781,11 @@ _templates['tags/index'] = '<!--\
 	</ul>\
 </div>\
 -->\
+<div class="filters clear">\
+	<input type="text" name="search" placeholder="Search notes" title="Search notes in this board (shortcut `f`)">\
+	<a href="#clear-filters" class="clear" title="Reset all search filters (shortcut `x`)">clear filters</a>\
+</div>\
+\
 <ul class="tags"></ul>\
 ';
 
