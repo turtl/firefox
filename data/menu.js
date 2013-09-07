@@ -24,7 +24,6 @@ window.addEvent('domready', function() {
 	});
 
 	// make sure menu is the right size on load
-	menu.reset_height();
 	port.bind('open', menu.reset_height);
 
 	// update invite/message count (they are folded together for now)
@@ -40,7 +39,7 @@ window.addEvent('domready', function() {
 			atag.setStyle('font-weight', 'bold');
 		}
 	};
-	port.bind('invites', update_msg_count);
+	port.bind('invites-count', update_msg_count);
 
 	// update for RSA generation
 	var rsagen	=	document.body.getElement('.rsa-gen');
