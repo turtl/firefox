@@ -27,19 +27,32 @@ window.addEvent('domready', function() {
 	port.bind('open', menu.reset_height);
 
 	// update invite/message count (they are folded together for now)
-	var update_msg_count	=	function(num_invites, num_messages)
+	var num_invites		=	0;
+	var num_messages	=	0;
+	var update_msg_count	=	function()
 	{
-		var num_invites		=	0;
-		var num_messages	=	0;
-		var num_total		=	num_invites + num_messages;
+		var atag		=	menu_ul.getElement('a.invites');
+		var num_total	=	num_invites + num_messages;
+		var html		=	atag.get('html').replace(/.*\([0-9]+\)\s*$/, '');
 		if(num_total > 0)
 		{
-			var atag	=	menu_ul.getElement('a.invites');
-			atag.set('html', atag.get('html') + ' ('+ num_total +')');
+			html	+=	' ('+num_total+')';
 			atag.setStyle('font-weight', 'bold');
 		}
+		else
+		{
+			atag.setStyle('font-weight', '');
+		}
+		atag.set('html', html);
 	};
-	port.bind('invites-count', update_msg_count);
+	port.bind('num-messages', function(num) {
+		num_messages	=	num;
+		update_msg_count();
+	});
+	port.bind('num-invites', function(num) {
+		num_invites		=	num;
+		update_msg_count();
+	});
 
 	// update for RSA generation
 	var rsagen	=	document.body.getElement('.rsa-gen');
