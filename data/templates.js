@@ -337,28 +337,30 @@ var action = note.id ? \'Edit\' : \'Add\';\
 ?>\
 <h1><?=action?> note</h1>\
 <div class="note-edit clear">\
-	<?\
-	var showtab = function(name)\
-	{\
-		var slug = name.toLowerCase();\
-		var t = \'<li class="\'+slug;\
-		if(note.type == slug) t += \' sel\';\
-		t += \'">\'+ name +\'</li>\';\
-		return t;\
-	};\
-	?>\
-	<ul class="type clear">\
-		<? if(!note.id) { ?>\
-			<?=showtab(\'Quick\')?>\
-		<? } ?>\
-		<?=showtab(\'Text\')?>\
-		<?=showtab(\'Link\')?>\
-		<?=showtab(\'Image\')?>\
-		<!--\
-		<li>Embed</li>\
-		<li>PDF</li>\
-		-->\
-	</ul>\
+	<? if(show_tabs) { ?>\
+		<?\
+		var showtab = function(name)\
+		{\
+			var slug = name.toLowerCase();\
+			var t = \'<li class="\'+slug;\
+			if(note.type == slug) t += \' sel\';\
+			t += \'">\'+ name +\'</li>\';\
+			return t;\
+		};\
+		?>\
+		<ul class="type clear">\
+			<? if(!note.id) { ?>\
+				<?=showtab(\'Quick\')?>\
+			<? } ?>\
+			<?=showtab(\'Text\')?>\
+			<?=showtab(\'Link\')?>\
+			<?=showtab(\'Image\')?>\
+			<!--\
+			<li>Embed</li>\
+			<li>PDF</li>\
+			-->\
+		</ul>\
+	<? } ?>\
 	<form class="standard-form">\
 		<div class="tags"></div>\
 \
@@ -763,7 +765,7 @@ _templates['personas/select'] = '<div class="select-persona">\
 	<? } else { ?>\
 		<div class="search">\
 			<form class="standard-form">\
-				<input <? if(tabindex) { ?>tabindex="<?=tabindex?>"<? } ?> type="text" name="email" placeholder="Type the email of the person you\'re searching for.">\
+				<input <? if(tabindex) { ?>tabindex="<?=tabindex?>"<? } ?> type="text" name="email" autocomplete="off" placeholder="Type the email of the person you\'re searching for.">\
 				<img class="load" src="<?=img(\'/images/site/icons/load_16x16.gif\')?>" width="16" height="16" alt="WORKING!!!1">\
 			</form>\
 			<div class="personas">\

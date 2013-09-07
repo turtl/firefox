@@ -36,12 +36,9 @@
       <div id="wrap">
         <div class="sidebar-bg"></div>
         <header class="clear">
-          <h1>
-            <a href="/">Turtl<span>.</span>
-            </a>
-          </h1>
+          <h1>Turtl<span>.</span></h1>
           <div class="loading">
-            <img src="images/site/icons/load_42x11.gif">
+            <img src="app/images/site/icons/load_42x11.gif">
           </div>
         </header>
         <div id="main" class="maincontent"></div>
@@ -49,10 +46,6 @@
     </div>
     <div id="footer">
       <footer>
-        <div class="gutter">Copyright &copy; 2013 
-          <a href="http://www.lyonbros.com" target="_blank">Lyon Bros. Enterprises, LLC.
-          </a>&amp; Drew
-        </div>
       </footer>
     </div>
   </body>
