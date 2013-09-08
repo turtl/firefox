@@ -29,21 +29,22 @@ window.addEvent('domready', function() {
 	// update invite/message count (they are folded together for now)
 	var num_invites		=	0;
 	var num_messages	=	0;
+	var invites_tag		=	menu_ul.getElement('a.invites');
+	var invites_orig	=	invites_tag.get('html');
 	var update_msg_count	=	function()
 	{
-		var atag		=	menu_ul.getElement('a.invites');
 		var num_total	=	num_invites + num_messages;
-		var html		=	atag.get('html').replace(/.*\([0-9]+\)\s*$/, '');
+		var html		=	invites_orig;
 		if(num_total > 0)
 		{
 			html	+=	' ('+num_total+')';
-			atag.setStyle('font-weight', 'bold');
+			invites_tag.setStyle('font-weight', 'bold');
 		}
 		else
 		{
-			atag.setStyle('font-weight', '');
+			invites_tag.setStyle('font-weight', '');
 		}
-		atag.set('html', html);
+		invites_tag.set('html', html);
 	};
 	port.bind('num-messages', function(num) {
 		num_messages	=	num;
