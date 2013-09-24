@@ -376,17 +376,17 @@ var action = note.id ? \'Edit\' : \'Add\';\
 		</div>\
 \
 		<div class="type url">\
-			<input tabindex="1" type="text" name="url" value="<?=note.url?>" placeholder="http://">\
+			<input tabindex="1" type="text" name="url" value="<?=(note.url ? note.url.replace(/"/g, \'&quot;\') : \'\')?>" placeholder="http://">\
 		</div>\
 \
 		<div class="type title">\
-			<input tabindex="1" type="text" name="title" value="<?=note.title?>" placeholder="Title">\
+			<input tabindex="1" type="text" name="title" value="<?=(note.title ? note.title.replace(/"/g, \'&quot;\') : \'\')?>" placeholder="Title">\
 		</div>\
 \
 		<div class="type text">\
 			<textarea tabindex="1" name="text" rows="8" cols="40" placeholder="Describe this note"><?=note.text?></textarea>\
 			<div class="form-note">\
-				Feel free to use <a href="http://daringfireball.net/boards/markdown/basics" target="_blank">markdown</a> for note text.\
+				Feel free to use <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank">markdown</a> for note text.\
 			</div>\
 		</div>\
 \
