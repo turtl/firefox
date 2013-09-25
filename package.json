@@ -3,11 +3,10 @@
 	"fullName": "Turtl",
 	"id": "turtl@lyonbros.com",
 	"description": "An encrypted note/bookmarking tool.",
-	"author": "Andrew Lyon, Jeff Lyon, Drew Cirincione",
-	"license": "MIT",
-	"version": "0.1",
+	"author": "Andrew Lyon",
+	"license": "GPLv3",
+	"version": "0.1.9",
 	"dependencies": [
-		"vold-utils",
 		"toolbar-button-complete"
 	],
 	"permissions": {"private-browsing": true}
