@@ -46,6 +46,7 @@ jsfiles="`find app/library -name '*.js' \
 	| grep -v 'composer' \
 	| grep -v 'bookmarklet' \
 	| grep -v 'cowcrypt' \
+	| grep -v 'tcrypt\.thread' \
 	| sed 's| |___|g' `"
 for jsfile in $jsfiles; do print_js $jsfile; done
 
