@@ -58,6 +58,7 @@ print_js "app/library/cowcrypt/hasher.js"
 print_js "app/library/cowcrypt/sha.js"
 print_js "app/library/cowcrypt/hmac.js"
 print_js "app/library/cowcrypt/aes.js"
+print_js "app/library/cowcrypt/twofish.js"
 print_js "app/library/cowcrypt/rsa.js"
 print_js "app/library/cowcrypt/pbkdf2.js"
 
