@@ -6,8 +6,8 @@ if(unsafeWindow.turtl)
 		unsafeWindow._base_url	=	base;
 		unsafeWindow._profile	=	profile_data;
 
-		// disable sync because we'll be sending in updates via the data_handler
-		unsafeWindow.turtl.sync	=	false;
+		// disable sync because we'll be syncing via the local db
+		unsafeWindow.turtl.do_sync	=	false;
 	});
 
 	// create a port/event adaptor (Firefox-specific) for the app

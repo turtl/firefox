@@ -2,7 +2,7 @@ window._in_ext	=	true;
 var port		=	new FirefoxAddonPort(addon.port);
 var barfr		=	null;
 var _base_url	=	null;
-var turtl		=	{};
+var turtl		=	{db: null};
 
 var loading	=	function(yesno)
 {
@@ -93,6 +93,19 @@ var submit_join	=	function(e)
 	user.join({
 		success: function(userdata) {
 			loading(false);
+			// manually set up our local db
+			database.setup({complete: function(server) { turtl.db = server; }});
+
+			// log the user in (runs some important events, including finishing
+			// adding our user to the local db)
+			var data = user.toJSON();
+			data.id = userdata.id;
+			turtl.user.set({
+				username: user.get('username'),
+				password: user.get('password')
+			});
+			turtl.user.login(data);
+
 			addon.port.emit('join-success', userdata.id, auth, key);
 			var username	=	document.getElement('.join input[name=username]');
 			var password	=	document.getElement('.join input[name=password]');

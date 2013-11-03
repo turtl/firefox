@@ -18,17 +18,17 @@ addon.port.on('init', function(auth, base) {
 	_base_url	=	base;
 
 	// enable sync
-	turtl.sync	=	true;
+	turtl.do_sync	=	true;
 
 	// login. this will also load all profile data and start syncing
 	turtl.user.login_from_auth(auth);
 });
 
 addon.port.on('start', function() {
-	turtl.sync	=	true;
+	turtl.do_sync	=	true;
 });
 
 addon.port.on('stop', function() {
-	turtl.sync	=	false;
+	turtl.do_sync	=	false;
 });
 
