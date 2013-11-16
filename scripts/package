@@ -60,11 +60,12 @@ echo -n "Repackaging..."
 zip -r turtl . -x *.git* > /dev/null
 echo "done."
 
-mv turtl.zip $EXTDIR/$XPI
+mv turtl.zip $EXTDIR/release/$XPI
 popd > /dev/null
 
 echo "Clearing tmp dir ($TMP/)"
 rm -rf $TMP
+rm turtl.xpi
 
-echo "Complete. Created fully-packaged file: $XPI."
+echo "Complete. Created fully-packaged file: release/$XPI."
 
