@@ -2,7 +2,7 @@ window._in_ext	=	true;
 var port		=	new FirefoxAddonPort(addon.port);
 var barfr		=	null;
 var _base_url	=	null;
-var turtl		=	{db: null};
+var turtl		=	{user: null, db: null};
 
 var loading	=	function(yesno)
 {
@@ -29,6 +29,7 @@ var submit_login	=	function(e)
 		username: username.get('value'),
 		password: password.get('value')
 	});
+	turtl.user	=	user;
 	var auth	=	user.get_auth();
 	var key		=	tcrypt.key_to_string(user.get_key());
 	if(!auth) return;
@@ -85,6 +86,7 @@ var submit_join	=	function(e)
 		username: username.get('value'),
 		password: password.get('value')
 	});
+	turtl.user	=	user;
 	var auth	=	user.get_auth();
 	var key		=	tcrypt.key_to_string(user.get_key());
 	if(!auth) return;
