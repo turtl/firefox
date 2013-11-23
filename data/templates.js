@@ -43,7 +43,7 @@ _templates['boards/list'] = '<div class="board-list">\
 		<ul class="actions">\
 			<li>\
 				<a href="#" class="add" title="Add a new board (shortcut `b`)">\
-					<img src="<?=img(\'/images/site/icons/add_16x16_black.png\')?>" alt="add" width="16" height="16">\
+					<icon>&oplus;</icon>\
 				</a>\
 			</li>\
 			<li>\
@@ -56,7 +56,7 @@ _templates['boards/list'] = '<div class="board-list">\
 		<ul class="actions">\
 			<li>\
 				<a href="#" class="add first" title="Add a new board (shortcut `b`)">\
-					<img src="<?=img(\'/images/site/icons/add_16x16_black.png\')?>" alt="add" width="16" height="16">\
+					<icon>&oplus;</icon>\
 					Add your first board\
 				</a>\
 			</li>\
@@ -73,7 +73,7 @@ _templates['boards/manage'] = '<h1>Manage boards</h1>\
 		<a href="#add-persona">Add a persona</a> to enable sharing.\
 	<? } ?>\
 	<div class="button add">\
-		<span>New board</span>\
+		<span><icon>&oplus;</icon> New board</span>\
 	</div>\
 	<span class="clearMe"></span>\
 	<ul class="mine">\
@@ -101,12 +101,12 @@ _templates['boards/manage'] = '<h1>Manage boards</h1>\
 						<? } ?>\
 						<li>\
 							<a href="#edit" class="<?=b.id?>" title="Edit board">\
-								<img src="<?=img(\'/images/site/icons/edit_16x16_black.png\')?>" alt="Edit" width="16" height="16">\
+								<icon>&#9998;</icon>\
 							</a>\
 						</li>\
 						<li>\
 							<a href="#delete" class="<?=b.id?>" title="Delete board (and all contained data)">\
-								<img src="<?=img(\'/images/site/icons/delete_16x16_black.png\')?>" alt="Delete" width="16" height="16">\
+								<icon>&#10006;</icon>\
 							</a>\
 						</li>\
 					<? } ?>\
@@ -123,7 +123,7 @@ _templates['boards/share'] = '<h1>\
 </h1>\
 <div class="board-share">\
 	<div class="button add share">\
-		<span>Share this board</span>\
+		<span><icon>&#59196;</icon> Share this board</span>\
 	</div>\
 	<span class="clearMe"></span>\
 \
@@ -308,6 +308,7 @@ _templates['modules/header_bar'] = '<div class="actions">\
 						<span>Personas</span>\
 					</a>\
 				</li>\
+				<?/*\
 				<li class="bookmarklet">\
 					<? var site_url = __site_url; ?>\
 					<a href="javascript:(function() { var u = encodeURIComponent(window.location.href); var t = encodeURIComponent(document.title); var m = document.getElementsByTagName(\'meta\'); var y = \'link\'; var d = \'\'; var i = false; for(var x in m) {if(m[x].name == \'description\') {d = m[x].content; break;}} for(var x in m) { if(m[x].getAttribute && m[x].getAttribute(\'property\') == \'og:image\') { i = m[x].content; break; } } if(i) d = \'![image](\'+i+\')  \\\\n\'+d; d = encodeURIComponent(d); var req = new XMLHttpRequest(); req.open(\'GET\', document.location, false); req.send(null); var headers = req.getAllResponseHeaders().toLowerCase(); var content = headers.match(new RegExp(\'content-type: image/([\\\\\\\\w]+)\')); if(content && content[1]) { y = \'image\'; t = \'\'; } f = \'<?=window.location.protocol?>//<?=window.location.host?>/bookmark?url=\'+ u +\'&title=\'+ t +\'&text=\'+ d +\'&type=\'+ y; t = function() { if(!window.open(f, \'turtl\', \'location=yes,links=no,scrollbars=no,toolbar=no,width=740,height=525\')) { location.href = f; } }; if(/Firefox/.test(navigator.userAgent)) setTimeout(t, 0); else t(); })()" title="Drag me to your bookmarks!">\
@@ -315,6 +316,7 @@ _templates['modules/header_bar'] = '<div class="actions">\
 						<span>Bookmarklet</span>\
 					</a>\
 				</li>\
+				*/?>\
 				<li class="logout">\
 					<a href="/users/logout" title="Sign out (shortcut `shift+L`)">\
 						<img src="<?=img(\'/images/site/icons/logout_16x16.png\')?>" width="16" height="16" alt="Logout">\
@@ -505,9 +507,13 @@ var t = \'<li class="\'+view.tagetize(tagname, {escape: true})+\' \'+(selected ?
 ';
 
 _templates['notes/index'] = '<div class="note-actions">\
-	<div class="button add note" title="Add a new note to the current board (shortcut `a`)">\
-		<span>Add note</span>\
+	<div class="button note add" title="Add a new note to the current board (shortcut `a`)">\
+		<span><icon>&oplus;</icon> Add note</span>\
 	</div>\
+	<div class="button note share" title="Share this board">\
+		<span><icon>&#59196;</icon> Share board</span>\
+	</div>\
+\
 	<ul class="list-type hidden">\
 		<li>\
 			<a class="masonry <? if(display_type == \'masonry\') { ?>sel<? } ?>" href="#listing" title="Display notes as an arranged grid">\
@@ -744,7 +750,7 @@ _templates['personas/index'] = '<h1>Your personas</h1>\
 	<? } ?>\
 	<? if(num_personas == 0) { ?>\
 		<div class="button add <? if(num_personas > 0) { ?>disabled<? } ?>">\
-			<span>Add a persona</span>\
+			<span><icon>&oplus;</icon> Add a persona</span>\
 		</div>\
 		<div class="content">\
 			<p>\
@@ -762,8 +768,10 @@ _templates['personas/list'] = '<? personas.each(function(p) { ?>\
 		<small><?=p.name?></small>\
 		<? if(p.has_key) { ?>\
 			<small class="success">(RSA 3072)</small>\
-		<? } else { ?>\
+		<? } else if(p.generating_key) { ?>\
 			<small>(generating RSA key)</small>\
+		<? } else if(show_edit) { ?>\
+			<small><a href="#generate">Generate RSA key</a></small>\
 		<? } ?>\
 		<? if(show_edit) { ?>\
 			<ul>\

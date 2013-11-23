@@ -5,7 +5,7 @@
 	"description": "An encrypted note/bookmarking tool.",
 	"author": "Andrew Lyon",
 	"license": "GPLv3",
-	"version": "0.3.2",
+	"version": "0.3.3",
 	"icon": "data/app/favicon.128.png",
 	"dependencies": [
 		"toolbar-button-complete"
