@@ -122,18 +122,8 @@ _templates['boards/share'] = '<h1>\
 	<small><a href="#back">&laquo; Back to board manager</a></small>\
 </h1>\
 <div class="board-share">\
-	<div class="button add share">\
-		<span><icon>&#59196;</icon> Share this board</span>\
-	</div>\
-	<span class="clearMe"></span>\
-\
 	<div class="share-to clear">\
 		<div class="select clear"></div>\
-		<form class="standard-form">\
-			<div class="submit">\
-				<input tabindex="4" type="submit" value="Invite" disabled>\
-			</div>\
-		</form>\
 	</div>\
 \
 	<div class="personas-list">\
@@ -181,8 +171,8 @@ _templates['boards/share'] = '<h1>\
 				<? }); ?>\
 			</ul>\
 		<? } else { ?>\
-			<p>\
-				You have not shared this board with anyone.\
+			<p class="note">\
+				The people you share this board with will show up here!\
 			</p>\
 		<? } ?>\
 	</div>\
@@ -224,15 +214,44 @@ _templates['dashboard/index'] = '<div class="dashboard clear">\
 ';
 
 _templates['invites/board'] = '<div class="invite">\
-	<h2>Invite <?=invite.email?> to Turtl</h2>\
+\
 	<form class="standard-form">\
-		<div class="split clear">\
-			<input type="text" name="secret" value="" tabindex="1" placeholder="Shared secret (optional)">\
+		<h2>Invite <?=invite.email?> to the board "<?=board.title?>"</h2>\
+		<div class="do-secure">\
+		</div>\
+		<? if(persona.id) { ?>\
 			<p>\
-				A recommended passphrase that protects the board in the event\
-				the invite code is intercepted. It must be sent to the invitee\
-				separately (by phone call, text msg, etc).\
+				<span class="success">This invite will be sent encrypted.</span>\
+				(<?=persona.email?> is already a Turtl user)\
 			</p>\
+		<? } else { ?>\
+			<p>\
+				This invite will be sent via email.\
+				(<?=invite.email?> is not a Turtl user, YET)\
+			</p>\
+		<? } ?>\
+\
+		<? if(!persona.id) { ?>\
+			<div class="challenge">\
+				<h3>\
+					<label for="invite_secure_chk"><icon>&#128274;</icon> Secure this invite</label>\
+					<input type="checkbox" id="invite_secure_chk" class="secure" <? if(!persona.id) { ?>checked<? } ?>>\
+				</h3>\
+				<div class="inner">\
+					<p>\
+						<em>Ask the recipient a question only they would know the answer\
+						to.</em> They will not have access to the answer, but must know\
+						it from memory.  Feel free to give formatting hints in the\
+						question.\
+					</p>\
+					<input type="text" name="question" placeholder="Question. &quot;What item did I lose on our last road trip? (Hint: two words)&quot;">\
+					<input type="text" name="answer" placeholder="Answer. &quot;decoder ring&quot;">\
+				</div>\
+			</div>\
+		<? } ?>\
+\
+		<div class="submit">\
+			<input tabindex="4" type="submit" value="Invite">\
 		</div>\
 	</form>\
 </div>\
@@ -273,9 +292,12 @@ _templates['invites/list'] = '<h1>Invites</h1>\
 							<strong><?=inv.code?></strong>\
 						<? } ?>\
 						<? if(inv.data.used_secret) { ?>\
-							&nbsp;&nbsp;(locked invite, <a href="#unlock">enter secret to unlock</a>)\
+							&nbsp;&nbsp;(locked invite, <a href="#unlock">answer the question to unlock</a>)\
 							<form class="secret">\
-								<input type="text" name="secret" placeholder="Enter this invite\'s shared secret to unlock and accept">\
+								<p class="question">\
+									<strong>Question:</strong> <?=inv.data.question?>\
+								</p>\
+								<input type="text" name="secret" placeholder="Answer the question to unlock the invite">\
 								<input type="submit" value="Unlock">\
 							</form>\
 						<? } ?>\
@@ -335,6 +357,17 @@ _templates['modules/header_bar'] = '<div class="actions">\
 			</ul>\
 		<? } ?>\
 	<? } ?>\
+</div>\
+';
+
+_templates['modules/share'] = '<div class="select-persona">\
+	<div class="search">\
+		<form class="standard-form">\
+			<input <? if(tabindex) { ?>tabindex="<?=tabindex?>"<? } ?> type="text" name="email" autocomplete="off" placeholder="Invite someone to this board">\
+			<img class="load" src="<?=img(\'/images/site/icons/load_16x16.gif\')?>" width="16" height="16" alt="WORKING!!!1">\
+		</form>\
+		<div class="sub"></div>\
+	</div>\
 </div>\
 ';
 
@@ -511,7 +544,7 @@ _templates['notes/index'] = '<div class="note-actions">\
 		<span><icon>&oplus;</icon> Add note</span>\
 	</div>\
 	<div class="button note share" title="Share this board">\
-		<span><icon>&#59196;</icon> Share board</span>\
+		<span><icon>&#59196;</icon> Share this board</span>\
 	</div>\
 \
 	<ul class="list-type hidden">\
@@ -817,31 +850,6 @@ _templates['personas/list'] = '<? personas.each(function(p) { ?>\
 		<? } ?>\
 	</li>\
 <? }); ?>\
-';
-
-_templates['personas/select'] = '<div class="select-persona">\
-	<? if(persona.id) { ?>\
-		<div class="persona">\
-			<h3><?=persona.email?></h3>\
-			<? if(!lock) { ?>\
-				<a href="#change" title="Pick another persona">change</a>\
-			<? } ?>\
-			<p>\
-				<?=persona.name?>\
-			</p>\
-		</div>\
-	<? } else { ?>\
-		<div class="search">\
-			<form class="standard-form">\
-				<input <? if(tabindex) { ?>tabindex="<?=tabindex?>"<? } ?> type="text" name="email" autocomplete="off" placeholder="Type the email of the person you\'re searching for.">\
-				<img class="load" src="<?=img(\'/images/site/icons/load_16x16.gif\')?>" width="16" height="16" alt="WORKING!!!1">\
-			</form>\
-			<div class="personas">\
-				<div class="personas-list"></div>\
-			</div>\
-		</div>\
-	<? } ?>\
-</div>\
 ';
 
 _templates['tags/index'] = '<!--\
