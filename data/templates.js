@@ -363,7 +363,7 @@ _templates['modules/header_bar'] = '<div class="actions">\
 _templates['modules/share'] = '<div class="select-persona">\
 	<div class="search">\
 		<form class="standard-form">\
-			<input <? if(tabindex) { ?>tabindex="<?=tabindex?>"<? } ?> type="text" name="email" autocomplete="off" placeholder="Invite someone to this board">\
+			<input <? if(tabindex) { ?>tabindex="<?=tabindex?>"<? } ?> type="text" name="email" autocomplete="off" placeholder="Type an email to invite someone to this board">\
 			<img class="load" src="<?=img(\'/images/site/icons/load_16x16.gif\')?>" width="16" height="16" alt="WORKING!!!1">\
 		</form>\
 		<div class="sub"></div>\
@@ -543,8 +543,22 @@ _templates['notes/index'] = '<div class="note-actions">\
 	<div class="button note add" title="Add a new note to the current board (shortcut `a`)">\
 		<span><icon>&oplus;</icon> Add note</span>\
 	</div>\
-	<div class="button note share" title="Share this board">\
+	<div class="button muted note share" title="Share this board">\
 		<span><icon>&#59196;</icon> Share this board</span>\
+	</div>\
+\
+	<div class="sort hidden">\
+		Sort notes by&nbsp;&nbsp;|&nbsp;\
+		<a href="#note-sort-id" class="sel asc">\
+			Date added\
+			<icon class="asc">&#59232;</icon>\
+			<icon class="desc">&#59235;</icon>\
+		</a>&nbsp;|&nbsp;\
+		<a href="#note-sort-mod">\
+			Most recent\
+			<icon class="asc">&#59232;</icon>\
+			<icon class="desc">&#59235;</icon>\
+		</a>\
 	</div>\
 \
 	<ul class="list-type hidden">\
@@ -586,7 +600,9 @@ if(color) color = [\'none\',\'blue\',\'red\',\'green\',\'purple\',\'pink\',\'bro
 \
 <div class="actions">\
 	<a class="sort" href="#sort" title="Drag to sort"><span></span></a>\
-	<a class="open" href="#open" title="Open note (shortcut `enter`)"><span>Open note</span></a>\
+	<a class="open" href="#open" title="Open note (shortcut `enter`)">\
+		<icon>&#59212;</icon>\
+	</a>\
 	<a class="menu" href="#menu" title="Note menu"><span>Note menu</span></a>\
 	<ul class="dropdown">\
 		<li><a href="#edit" class="edit" title="Edit note (shortcut `e`)"><span>Edit note</span></a></li>\
