@@ -555,7 +555,7 @@ _templates['notes/index'] = '<div class="note-actions">\
 			<icon class="desc">&#59235;</icon>\
 		</a>&nbsp;|&nbsp;\
 		<a href="#note-sort-mod">\
-			Most recent\
+			Recently changed\
 			<icon class="asc">&#59232;</icon>\
 			<icon class="desc">&#59235;</icon>\
 		</a>\
