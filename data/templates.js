@@ -213,6 +213,42 @@ _templates['dashboard/index'] = '<div class="dashboard clear">\
 </div>\
 ';
 
+_templates['feedback/button'] = '<a href="#feedback">\
+	<img src="<?=img(\'/images/template/feedback.png\')?>" width="35" height="127" alt="Feedback" title="Give us feedback">\
+</a>\
+';
+
+_templates['feedback/index'] = '<h1>Give us feedback</h1>\
+<div class="feedback content">\
+	<p>\
+		Have a problem? A question? Want a new feature?\
+		Let us know and we\'ll get back to you!\
+	</p>\
+	<form class="standard-form">\
+		<input type="text" name="email" value="<?=email?>" placeholder="Your email (optional for comments/suggestions)">\
+		<textarea rows="10" cols="30" name="body" placeholder="Your comments, questions, suggestions"></textarea>\
+		<div class="button-row">\
+			<input type="submit" value="Send">\
+		</div>\
+	</form>\
+</div>\
+';
+
+_templates['feedback/thanks'] = '<h1>Thanks for getting in touch</h1>\
+\
+<div class="content">\
+	<p>\
+		Your feedback helps make Turtl better!\
+		<? if(email) { ?>\
+			We\'ll get back to you quickly with responses to your questions/comments.\
+		<? } else { ?>\
+			Thank you for taking the time to send us your thoughts.\
+		<? } ?>\
+	</p>\
+	<input type="button" name="close" value="Close">\
+</div>\
+';
+
 _templates['invites/board'] = '<div class="invite">\
 \
 	<form class="standard-form">\
