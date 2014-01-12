@@ -18,10 +18,12 @@
 <link rel="stylesheet" href="app/css/site/bookmark.css">
 <link rel="stylesheet" href="app/css/site/categories.css">
 <link rel="stylesheet" href="app/css/site/dashboard.css">
+<link rel="stylesheet" href="app/css/site/feedback.css">
 <link rel="stylesheet" href="app/css/site/invites.css">
 <link rel="stylesheet" href="app/css/site/notes.css">
 <link rel="stylesheet" href="app/css/site/notifications.css">
 <link rel="stylesheet" href="app/css/site/personas.css">
+<link rel="stylesheet" href="app/css/site/sync.css">
 <link rel="stylesheet" href="app/css/site/tags.css">
 <link rel="stylesheet" href="app/css/site/users.css">
 <link rel="stylesheet" href="background.css">
@@ -37,6 +39,7 @@
 	<script src="app/config/routes.js"></script>
 
 <script src="app/library/addon-adaptors/chrome.js"></script>
+<script src="app/library/addon-adaptors/desktop.js"></script>
 <script src="app/library/addon-adaptors/firefox.js"></script>
 <script src="app/library/autocomplete.js"></script>
 <script src="app/library/barfr.js"></script>
@@ -90,7 +93,9 @@
 <script src="app/controllers/feedback/index.js"></script>
 <script src="app/controllers/invites/board.js"></script>
 <script src="app/controllers/invites/list.js"></script>
+<script src="app/controllers/notes/_base_item.js"></script>
 <script src="app/controllers/notes/edit.js"></script>
+<script src="app/controllers/notes/edit_file.js"></script>
 <script src="app/controllers/notes/edit_tags.js"></script>
 <script src="app/controllers/notes/index.js"></script>
 <script src="app/controllers/notes/item.js"></script>
@@ -101,6 +106,7 @@
 <script src="app/controllers/personas/edit.js"></script>
 <script src="app/controllers/personas/index.js"></script>
 <script src="app/controllers/personas/list.js"></script>
+<script src="app/controllers/sync/index.js"></script>
 <script src="app/controllers/tags/index.js"></script>
 <script src="app/controllers/tags/item.js"></script>
 <script src="app/controllers/users/join.js"></script>
@@ -111,6 +117,7 @@
 <script src="app/models/board.js"></script>
 <script src="app/models/category.js"></script>
 <script src="app/models/feedback.js"></script>
+<script src="app/models/file.js"></script>
 <script src="app/models/invite.js"></script>
 <script src="app/models/keychain.js"></script>
 <script src="app/models/message.js"></script>
@@ -136,7 +143,7 @@
       <div id="wrap">
         <div class="sidebar-bg"></div>
         <header class="clear">
-          <h1>Turtl<span>.</span></h1>
+          <h1><span>Turtl</span></h1>
           <div class="loading">
             <img src="app/images/site/icons/load_42x11.gif">
           </div>

@@ -214,7 +214,7 @@ _templates['dashboard/index'] = '<div class="dashboard clear">\
 ';
 
 _templates['feedback/button'] = '<a href="#feedback">\
-	<img src="<?=img(\'/images/template/feedback.png\')?>" width="35" height="127" alt="Feedback" title="Give us feedback">\
+	<img src="<?=img(\'/images/template/feedback.png\')?>" width="35" height="127" alt="Feedback" title="Have a question or feature request?">\
 </a>\
 ';
 
@@ -225,11 +225,13 @@ _templates['feedback/index'] = '<h1>Give us feedback</h1>\
 		Let us know and we\'ll get back to you!\
 	</p>\
 	<form class="standard-form">\
-		<input type="text" name="email" value="<?=email?>" placeholder="Your email (optional for comments/suggestions)">\
-		<textarea rows="10" cols="30" name="body" placeholder="Your comments, questions, suggestions"></textarea>\
-		<div class="button-row">\
-			<input type="submit" value="Send">\
-		</div>\
+		<? if(email && email.match(/.*@.*/)) { ?>\
+			<input type="hidden" name="email" value="<?=email?>">\
+		<? } else { ?>\
+			<input type="text" name="email" value="" placeholder="Your email (optional for comments/suggestions)">\
+		<? } ?>\
+		<textarea rows="3" cols="30" name="body" placeholder="Your comments, questions, suggestions"></textarea>\
+		<input type="submit" value="Send">\
 	</form>\
 </div>\
 ';
@@ -247,6 +249,31 @@ _templates['feedback/thanks'] = '<h1>Thanks for getting in touch</h1>\
 	</p>\
 	<input type="button" name="close" value="Close">\
 </div>\
+';
+
+_templates['file'] = '<center>\
+	<br><br><br>\
+	<strong style="font-family: impact; font-size: 32px; font-weight: 100; color: #666; text-transform: uppercase;">\
+		Decrypting file, please wait <span class="spin" style="display: inline-block; width: 32px; text-align: center;">/</span>\
+	</strong>\
+	<%script%>\
+		var spinner	=	function()\
+		{\
+			var chars	=	[\'/\', \'-\', \'\\\\\', \'|\'];\
+			var idx		=	0;\
+			var spin	=	function()\
+			{\
+				var spinner	=	document.body.getElementsByTagName(\'span\')[0];\
+				if(!spinner) return;\
+				spinner.innerHTML	=	chars[idx];\
+				idx = (idx + 1) % chars.length;\
+				setTimeout(spin, 100);\
+			};\
+			spin();\
+		}\
+		spinner();\
+	</%script%>\
+</center>\
 ';
 
 _templates['invites/board'] = '<div class="invite">\
@@ -356,7 +383,7 @@ _templates['modules/header_bar'] = '<div class="actions">\
 		<div class="apps clear"></div>\
 	<? } ?>\
 \
-	<? if(!window._in_ext) { ?>\
+	<? if(!window._in_ext && !window._in_desktop) { ?>\
 		<? if(user.id) { ?>\
 			<a class="menu" href="#menu"><img src="<?=img(\'/images/site/icons/menu_37x29.png\')?>" width="37" height="29" alt="Menu"></a>\
 			<ul class="menu">\
@@ -383,6 +410,7 @@ _templates['modules/header_bar'] = '<div class="actions">\
 				</li>\
 			</ul>\
 		<? } else { ?>\
+			<?/*\
 			<ul>\
 				<li>\
 					<a href="/users/login"><span>Login</span></a>\
@@ -391,6 +419,7 @@ _templates['modules/header_bar'] = '<div class="actions">\
 					<a href="/users/join"><span>Join</span></a>\
 				</li>\
 			</ul>\
+			*/?>\
 		<? } ?>\
 	<? } ?>\
 </div>\
@@ -412,6 +441,8 @@ var action = note.id ? \'Edit\' : \'Add\';\
 ?>\
 <h1><?=action?> note</h1>\
 <div class="note-edit clear">\
+	<div class="boards"></div>\
+\
 	<? if(show_tabs) { ?>\
 		<?\
 		var showtab = function(name)\
@@ -456,6 +487,8 @@ var action = note.id ? \'Edit\' : \'Add\';\
 			<div class="type text">\
 				<textarea tabindex="1" name="text" rows="8" cols="40" placeholder="Describe this note"><?=note.text?></textarea>\
 			</div>\
+\
+			<div class="type upload"></div>\
 \
 			<a href="#" class="markdown-tutorial">Formatting help &raquo;</a>\
 		</div>\
@@ -518,6 +551,7 @@ var action = note.id ? \'Edit\' : \'Add\';\
 		</div>\
 \
 		<span class="clearMe"></span>\
+\
 		<div class="submit">\
 			<input tabindex="3" type="submit" value="<?=action?> note">\
 		</div>\
@@ -542,6 +576,23 @@ var action = note.id ? \'Edit\' : \'Add\';\
 		</div>\
 		-->\
 	</form>\
+</div>\
+';
+
+_templates['notes/edit_file'] = 'Attach a file: <input type="file" name="file" placeholder="Attach a file">\
+<a href="#remove-attachment" class="remove">Remove attachment</a>\
+<div class="upload-preview">\
+	<? if(file.hash || file.name) { ?>\
+		<? if(file.type && file.type.match(/^image/)) { ?>\
+			<? if(blob_url) { ?>\
+				<img src="<?=blob_url?>">\
+			<? } else { ?>\
+				Generating preview...\
+			<? } ?>\
+		<? } else { ?>\
+			<?=file.name?>\
+		<? } ?>\
+	<? } ?>\
 </div>\
 ';
 
@@ -642,10 +693,24 @@ if(color) color = [\'none\',\'blue\',\'red\',\'green\',\'purple\',\'pink\',\'bro
 	<a class="menu" href="#menu" title="Note menu"><span>Note menu</span></a>\
 	<ul class="dropdown">\
 		<li><a href="#edit" class="edit" title="Edit note (shortcut `e`)"><span>Edit note</span></a></li>\
-		<li><a href="#move" class="move" title="Move note to another board (shortcut `m`)"><span>Move note to another board</span></a></li>\
+		<!--<li><a href="#move" class="move" title="Move note to another board (shortcut `m`)"><span>Move note to another board</span></a></li>-->\
 		<li><a href="#delete" class="delete" title="Delete note (shortcut `delete`)"><span>Delete note</span></a></li>\
 	</ul>\
 </div>\
+<? if(has_file) { ?>\
+	<div class="note-file">\
+		<? if(note.file.blob_url && note.file.type && note.file.type.match(/^image/)) { ?>\
+			<a href="<?=note.file.blob_url?>" class="image" target="_blank"><img src="<?=note.file.blob_url?>"></a>\
+		<? } else if(note.type != \'image\' && note.file.type && note.file.type.match(/^image/)) { ?>\
+			<?=note.file.name?> (generating preview)\
+		<? } else if(note.file && note.type != \'image\') { ?>\
+			<a href="#attachment" class="attachment" target="_blank">\
+				<img src="<?=img(\'/images/site/icons/files/\'+file_type+\'.png\')?>" width="16" height="16" alt="file">\
+				<?=note.file.name?>\
+			</a>\
+		<? } ?>\
+	</div>\
+<? } ?>\
 <div class="gutter content">\
 	<?=Template.render(\'notes/list/\'+note.type, {\
 		note: note\
@@ -714,11 +779,26 @@ if(color) color = [\'none\',\'blue\',\'red\',\'green\',\'purple\',\'pink\',\'bro
 	<a class="menu" href="#menu" title="Note menu"><span>Note menu</span></a>\
 	<ul class="dropdown">\
 		<li><a href="#edit" class="edit" title="Edit note (shortcut `e`)"><span>Edit note</span></a></li>\
-		<li><a href="#move" class="move" title="Move note to another board (shortcut `m`)"><span>Move note to another board</span></a></li>\
+		<!--<li><a href="#move" class="move" title="Move note to another board (shortcut `m`)"><span>Move note to another board</span></a></li>-->\
 		<li><a href="#delete" class="delete" title="Delete note (shortcut `delete`)"><span>Delete note</span></a></li>\
 	</ul>\
 </div>\
-<? if(note.type != \'image\') { ?><div class="content"><? } ?>\
+<? if(has_file) { ?>\
+	<? var is_image = note.file.blob_url && note.file.type && note.file.type.match(/^image/); ?>\
+	<div class="note-file <?=(is_image ? \'image\' : \'\')?>">\
+		<? if(is_image) { ?>\
+			<a href="<?=note.file.blob_url?>" target="_blank"><img src="<?=note.file.blob_url?>"></a>\
+		<? } else if(note.type != \'image\' && note.file.type && note.file.type.match(/^image/)) { ?>\
+			<?=note.file.name?> (generating preview)\
+		<? } else if(note.file && note.type != \'image\') { ?>\
+			<a href="#attachment" class="attachment" target="_blank">\
+				<img src="<?=img(\'/images/site/icons/files/\'+file_type+\'.png\')?>" width="16" height="16" alt="file">\
+				<?=note.file.name?>\
+			</a>\
+		<? } ?>\
+	</div>\
+<? } ?>\
+<? if(note.type != \'image\') { ?><div class="content clear"><? } ?>\
 	<? var tags = Template.render(\'notes/view/tags\', { tags: note.tags }); ?>\
 	<?=Template.render(\'notes/view/\'+note.type, {\
 		note: note,\
