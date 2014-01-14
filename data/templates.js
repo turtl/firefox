@@ -179,12 +179,6 @@ _templates['boards/share'] = '<h1>\
 </div>\
 ';
 
-_templates['bookmark/index'] = '<div class="boards clear">\
-	<div class="board"></div>\
-</div>\
-<div class="edit"></div>\
-';
-
 _templates['categories/list'] = '<? if(categories.length > 0) { ?>\
 	<ul class="categories">\
 		<? categories.each(function(c) { ?>\
@@ -1023,9 +1017,6 @@ _templates['users/join'] = '<div class="userform join">\
 			</p>\
 			<p>\
 				<em>Make sure you keep your password in a safe place!</em>\
-			</p>\
-			<p>\
-				Read more about <a href="http://turtl.it/about">how Turtl works</a>.\
 			</p>\
 		</div>\
 		<input type="submit" value="Join" tabindex="4">\
