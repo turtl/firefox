@@ -1,7 +1,7 @@
 {
 	"name": "turtl",
 	"fullName": "Turtl",
-	"id": "turtl@lyonbros.com",
+	"id": "turtl@lyonbros.com",		"__comment": "don't change the id without changing the CORS URL in the API's controllers/app.lisp file's :post-headers hook",
 	"description": "An encrypted note/bookmarking tool.",
 	"author": "Andrew Lyon",
 	"license": "GPLv3",
