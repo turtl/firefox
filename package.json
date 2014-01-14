@@ -10,5 +10,7 @@
 	"dependencies": [
 		"toolbar-button-complete"
 	],
-	"permissions": {"private-browsing": true}
+	"permissions": {
+		"private-browsing": true
+	}
 }

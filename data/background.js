@@ -1,6 +1,7 @@
-window.firefox			=	true;
-window._in_ext			=	true;
-window._in_background	=	true;
+window.firefox				=	true;
+window._in_ext				=	true;
+window._in_background		=	true;
+window._enable_api_tracker	=	false;
 var port		=	new FirefoxAddonPort(addon.port);
 var _base_url	=	false;
 
@@ -31,4 +32,13 @@ addon.port.on('start', function() {
 addon.port.on('stop', function() {
 	turtl.do_sync	=	false;
 });
+
+addon.port.on('set-config', function(config) {
+	window.__api_url	=	config.api_url;
+	if(window.turtl && turtl.api)
+	{
+		turtl.api.api_url	=	window.__api_url;
+	}
+});
+port.send('pre-load');
 

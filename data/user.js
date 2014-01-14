@@ -4,6 +4,9 @@ var barfr		=	null;
 var _base_url	=	null;
 var turtl		=	{user: null, db: null};
 
+// turn on API wrapper
+window._enable_api_tracker	=	false;
+
 var loading	=	function(yesno)
 {
 	var yes	=	yesno ? true : false;
@@ -153,8 +156,10 @@ addon.port.on('show', function() {
 	if(login_username) login_username.focus();
 });
 
-addon.port.on('init', function(base) {
+addon.port.on('init', function(base, config) {
 	_base_url	=	base;
+	window.__api_url	=	config.api_url;
+	turtl.api.api_url	=	window.__api_url;
 });
 
 // hey ding-dong, we're done here
