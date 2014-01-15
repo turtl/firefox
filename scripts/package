@@ -16,15 +16,6 @@ TMP=/tmp/turtl-package
 # the resulting XPI file (*must* be the same as what cfx xpi produces)
 XPI=turtl.xpi
 
-nogen=$1
-
-if [ "$nogen" != "--skip-tpl" ]; then
-	# generate templates
-	echo -n "Regenerating templates so we have the freshest versions..."
-	./scripts/generate-templates
-	echo "done."
-fi
-
 # package the addon
 echo "Packaging addon (via cfx)."
 $CFX xpi > /dev/null
