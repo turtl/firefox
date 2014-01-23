@@ -113,15 +113,15 @@ if(og_image)
 	}.bind(this);
 	img.url	=	og_image;
 
-	// if loading the image takes longer than a second, fuck it, check the images
-	// on the page
+	// if loading the image takes longer than a few seconds, fuck it, check the
+	// images on the page
 	setTimeout(function() {
 		// if og:image loaded already, just forget it
 		if(loaded) return false;
 		cancelled	=	true;
 		do_check_images();
 		finish();
-	}, 1000);
+	}, 2500);
 }
 else
 {
