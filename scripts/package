@@ -14,7 +14,7 @@ CFX=../../../addon-sdk-1.14/bin/cfx
 # tmp dir for generating package
 TMP=/tmp/turtl-package
 # the resulting XPI file (*must* be the same as what cfx xpi produces)
-XPI=turtl.xpi
+XPI=firefox.xpi
 
 # package the addon
 echo "Packaging addon (via cfx)."
