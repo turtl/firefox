@@ -32,7 +32,7 @@ EXTDIR=`realpath .`
 pushd $TMP/ > /dev/null
 
 echo -n "Upacking addon to make modifications..."
-unzip $EXTDIR/$XPI > /dev/null
+unzip $EXTDIR/turtl.xpi > /dev/null
 echo "done."
 
 echo "  - copying live config over local"
