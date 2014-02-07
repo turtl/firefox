@@ -6,6 +6,7 @@ if(unsafeWindow.turtl)
 		unsafeWindow._base_url				=	base;
 		unsafeWindow._profile				=	profile_data;
 		unsafeWindow.__api_url				=	config.api_url;
+		unsafeWindow.config.version			=	config.version;
 
 		// disable sync because we'll be syncing via the local db
 		unsafeWindow.turtl.do_sync			=	false;

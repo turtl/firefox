@@ -35,7 +35,8 @@ addon.port.on('stop', function() {
 });
 
 addon.port.on('set-config', function(config) {
-	window.__api_url	=	config.api_url;
+	window.__api_url		=	config.api_url;
+	window.config.version	=	config.version;
 	if(window.turtl && turtl.api)
 	{
 		turtl.api.api_url	=	window.__api_url;
