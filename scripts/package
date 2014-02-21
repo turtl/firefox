@@ -10,54 +10,30 @@
 # config section
 # ------------------------------------------------------------------------------
 # path to cfx
-CFX=../../../addon-sdk-1.14/bin/cfx
+CFX=`realpath ../../../addon-sdk-1.14/bin/cfx`
 # tmp dir for generating package
 TMP=/tmp/turtl-package
 # the resulting XPI file (*must* be the same as what cfx xpi produces)
 XPI=firefox.xpi
 
+EXTDIR=`realpath .`
+
+echo "Copying files to $TMP for packaging."
+mkdir -p $TMP
+rsync -avk . $TMP/ --exclude="release/" --exclude=".git" --exclude="data/app/.git" > /dev/null
+pushd $TMP > /dev/null
+echo "Copying live config(s) over local"
+cp lib/config.live.js lib/config.js
+cp lib/config.app.js data/app/config/config.js
+
 # package the addon
 echo "Packaging addon (via cfx)."
 $CFX xpi > /dev/null
 
-# grab the app dir
-pushd data/app/ > /dev/null
-APPDIR=`pwd -P`
+mv turtl.xpi $EXTDIR/release/$XPI
 popd > /dev/null
 
-# create/enter our temp dir
-mkdir -p $TMP
-rm -rf $TMP/*
-EXTDIR=`realpath .`
-pushd $TMP/ > /dev/null
-
-echo -n "Upacking addon to make modifications..."
-unzip $EXTDIR/turtl.xpi > /dev/null
-echo "done."
-
-echo "  - copying live config over local"
-cp $EXTDIR/lib/config.live.js resources/turtl/lib/config.js
-cp $EXTDIR/lib/config.app.js resources/turtl/data/app/config/config.js
-rm -rf resources/turtl/data/app
-
-echo "  - symlinking app subfolder"
-ln -s $APPDIR resources/turtl/data/app
-
-echo "  - setting applicable permissions"
-find resources/addon-sdk -type d -exec chmod 755 {} \;
-find resources/addon-sdk -type f -exec chmod 644 {} \;
-chmod 644 bootstrap.js
-
-echo -n "Repackaging..."
-zip -r turtl . -x *.git* > /dev/null
-echo "done."
-
-mv turtl.zip $EXTDIR/release/$XPI
-popd > /dev/null
-
-echo "Clearing tmp dir ($TMP/)"
 rm -rf $TMP
-rm turtl.xpi
 
 echo "Complete. Created fully-packaged file: release/$XPI."
 
