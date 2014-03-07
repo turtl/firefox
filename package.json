@@ -2,10 +2,10 @@
 	"name": "turtl",
 	"fullName": "Turtl",
 	"id": "turtl@lyonbros.com",		"__comment": "don't change the id without changing the CORS URL in the API's controllers/app.lisp file's :post-headers hook",
-	"description": "An encrypted note/bookmarking tool.",
+	"description": "A client-side encrypted file and note storage app.",
 	"author": "Andrew Lyon",
 	"license": "GPLv3",
-	"version": "0.4.2",
+	"version": "0.4.3",
 	"icon": "data/app/images/favicon.128.png",
 	"dependencies": [
 		"toolbar-button-complete"
