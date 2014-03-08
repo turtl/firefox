@@ -54,26 +54,5 @@ window.addEvent('domready', function() {
 		num_invites		=	num;
 		update_msg_count();
 	});
-
-	// update for RSA generation
-	var rsagen	=	document.body.getElement('.rsa-gen');
-	var update_rsa_gen	=	function(is_gen)
-	{
-		if(!rsagen) return;
-		rsagen.setStyle('display', is_gen ? 'block' : '');
-		menu.reset_height();
-	};
-	port.bind('rsa-gen', function() { update_rsa_gen(true); });
-	port.bind('rsa-key', function() { update_rsa_gen(false); });
-	update_rsa_gen();
-	var inp_rsa	=	rsagen.getElement('input[name=notify-rsa]');
-	if(inp_rsa)
-	{
-		inp_rsa.addEvent('change', function(e) {
-			var inp	=	e.target;
-			var on	=	inp.checked;
-			port.send('notify-rsa', on);
-		});
-	}
 });
 

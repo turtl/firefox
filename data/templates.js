@@ -827,7 +827,7 @@ var action = persona.id ? \'Edit\' : \'Add\';\
 	<!--<? if(was_join) { ?><em>Almost done: </em><? } ?>-->\
 	<?=action?> <? if(was_join) { ?>a <? } ?>persona\
 	<? if(was_join) { ?>\
-		<small>(personas let you to share with others)</small>\
+		<small>(personas let you share with others)</small>\
 	<? } else { ?>\
 		<small><a href="#personas">&laquo; Back to <? if(return_to_manage) { ?>board management<? } else { ?>your personas<? } ?></a></small>\
 	<? } ?>\
@@ -889,11 +889,9 @@ _templates['personas/list'] = '<? personas.each(function(p) { ?>\
 		<h3><?=p.email?></h3>\
 		<small><?=p.name?></small>\
 		<? if(p.has_key) { ?>\
-			<small class="success">(RSA 3072)</small>\
-		<? } else if(p.generating_key) { ?>\
-			<small>(generating RSA key)</small>\
+			<small class="success">(ECC384)</small>\
 		<? } else if(show_edit) { ?>\
-			<small><a href="#generate">Generate RSA key</a></small>\
+			<small><a href="#generate">Generate keypair</a></small>\
 		<? } ?>\
 		<? if(show_edit) { ?>\
 			<ul>\

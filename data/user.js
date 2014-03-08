@@ -1,5 +1,9 @@
 window._in_ext	=	true;
 var port		=	new FirefoxAddonPort(addon.port);
+
+// we need CBC for backwards compat
+sjcl.beware['CBC mode is dangerous because it doesn\'t protect message integrity.']();
+
 var barfr		=	null;
 var _base_url	=	null;
 var turtl		=	{user: null, db: null};
