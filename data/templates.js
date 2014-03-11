@@ -79,7 +79,7 @@ _templates['boards/manage'] = '<h1>Manage boards</h1>\
 	<ul class="mine">\
 		<? boards.each(function(b) { ?>\
 			<li class="clear board_<?=b.id?>">\
-				<span class="sort" title="Drag to sort boards"></span>\
+				<!--<span class="sort" title="Drag to sort boards"></span>-->\
 				<h3>\
 					<?=b.title?>\
 					<? if(b.shared) { ?><small>(shared)</small> <? } ?>\
