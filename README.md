@@ -1,21 +1,9 @@
-Turtl for Firefox
-=================
-Please note that this project is not officially maintained, and will not be
-until Firefox has extension sandboxing.
+Turtl for Firefox (deprecated)
+==============================
 
-Setup
------
-Create a symlink from `data/app/` -> `/path/to/turtl-js`.
+This houses the source code for the old Turtl Firefox extension.
 
-Packaging
----------
-To build/package the extension, just run the `package` script from the root
-directory:
-
-```bash
-cd /path/to/turtl/firefox
-./scripts/package
-```
-
-This builds an xpi file in the `release/` directory.
+It has been replaced by the Firefox [bookmarking extension](https://github.com/turtl/firefox-bookmarker).
+Instead of running Turtl in the browser, the new extension just sends
+bookmarking data directly to the Turtl desktop app.
 
